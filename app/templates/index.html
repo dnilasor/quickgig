@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Hello, {{ user.username }}!</h1>
+  {% for gig in gigs %}
+  <div><p>{{ gig.employer.username }} has a gig for you: <b>{{ gig.detail }}</b></p></div>
+  {% endfor %}
+{% endblock %}
