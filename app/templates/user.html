@@ -9,11 +9,6 @@
   </table>
   <hr>
   {% for gig in gigs %}
-  <table>
-    <tr valign="top">
-      <td><img src="{{ gig.author.avatar(36) }}"></td>
-      <td>{{ gig.author.username }} says: <br>{{gig.body }}</td>
-	</tr>
-  </table>
+    {% include '_gig.html' %}
   {% endfor %}
 {% endblock %}
