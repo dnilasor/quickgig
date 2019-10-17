@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User
 from app import app, db
-from app.forms import LoginForm
+from app.forms import LoginForm, SignupForm
 from werkzeug.urls import url_parse
 
 @app.route('/')
@@ -10,7 +10,6 @@ from werkzeug.urls import url_parse
 @login_required
 
 def index():
-  user = {'username': 'Dnilasor'}
   gigs = [
     {
 	  'employer': {'username': 'ManagerJane'},
@@ -21,7 +20,7 @@ def index():
 	  'detail': '$20/hr to help me gtf out of my boyfriends house in Evanston. Must be strong!'
 	}
   ]
-  return render_template('index.html', title='Home', user=user, gigs=gigs)
+  return render_template('index.html', title='Home', gigs=gigs)
   
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -44,3 +43,18 @@ def login():
 def logout():
   logout_user()
   return redirect(url_for('index'))  
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+  if current_user.is_authenticated:
+    return redirect(url_for('index'))
+  form = SignupForm()
+  if form.validate_on_submit():
+    user = User(username=form.username.data, email=form.email.data)
+    user.set_password(form.password.data)
+    db.session.add(user)
+    db.session.commit()
+    flash('Congrats, you are signed up!')
+    return redirect(url_for('login'))
+  return render_template('signup.html', title='Signup', form=form)
