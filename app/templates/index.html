@@ -2,6 +2,17 @@
 
 {% block content %}
   <h1>Hello, {{ current_user.username }}!</h1>
+  <form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+      {{form.gig.label }}<br>
+      {{ form.gig(cols=32, rows=8) }}<br>
+      {% for error in form.gig.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+      </p>
+      <p>{{ form.submit() }}</p>
+  </form>
   {% for gig in gigs %}
   <div><p>{{ gig.employer.username }} has a gig for you: <b>{{ gig.detail }}</b></p></div>
   {% endfor %}

@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Gig
 from app import app, db
-from app.forms import LoginForm, SignupForm, EditProfileForm
+from app.forms import LoginForm, SignupForm, EditProfileForm, GigForm
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -12,22 +12,20 @@ def before_request():
     current_user.last_seen = datetime.utcnow()
     db.session.commit()
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 
 def index():
-  gigs = [
-    {
-	  'employer': {'username': 'ManagerJane'},
-	  'detail': 'Come help me sell hip air plants in Logan Square!'
-	},
-	{
-	  'employer': {'username': 'MustMoveNow'},
-	  'detail': '$20/hr to help me gtf out of my boyfriends house in Evanston. Must be strong!'
-	}
-  ]
-  return render_template('index.html', title='Home', gigs=gigs)
+  form = GigForm()
+  if form.validate_on_submit():
+    gig = Gig(detail=form.gig.data, employer=current_user)
+    db.session.add(gig)
+    db.session.commit()
+    flash('Help is on the way! Your Gig is now live.')
+    return redirect(url_for('index'))
+  gigs = Gig.query.all()
+  return render_template('index.html', title='Home', form=form, gigs=gigs)
   
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -71,15 +69,15 @@ def signup():
 def user(username):
   user = User.query.filter_by(username=username).first_or_404()
   gigs = [
- {'author': user, 'body': 'Test gig #1'},
-    {'author': user, 'body': 'Test gig #1'}
+ {'employer': user, 'detail': 'Test gig #1'},
+    {'employer': user, 'detail': 'Test gig #1'}
   ]
   return render_template('user.html', user=user, gigs=gigs)
   
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-  form = EditProfileForm()
+  form = EditProfileForm(current_user.username)
   if form.validate_on_submit():
     current_user.username = form.username.data
     current_user.about_me = form.about_me.data
