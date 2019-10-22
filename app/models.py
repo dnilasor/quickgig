@@ -6,7 +6,7 @@ from app import login
 from hashlib import md5
 
 
-favoriters = db.Table('favorites',
+favoriters = db.Table('favoriters',
   db.Column('favoriter_id', db.Integer, db.ForeignKey('user.id')),
   db.Column('favorited_id', db.Integer, db.ForeignKey('user.id'))
   )
@@ -41,20 +41,20 @@ class User(UserMixin, db.Model):
     return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)	
 	
   def favorite(self, user):
-    if not self.is_favorited(user):
+    if not self.is_favorite(user):
       self.favorited.append(user)
   
   def unfavorite(self, user):
-    if self.is_favorited(user):
+    if self.is_favorite(user):
       self.favorited.remove(user)
 
-  def is_favorited(self, user):
+  def is_favorite(self, user):
     return self.favorited.filter(
       favoriters.c.favorited_id == user.id).count() > 0
 
   def favorite_gigs(self):
     favorited = Gig.query.join(
-      favoriters, (favoriters.c.favorited_id == Gig.user_id.filter(
+      favoriters, (favoriters.c.favorited_id == Gig.user_id)).filter(
         favoriters.c.favoriter_id == self.id)
     own = Gig.query.filter_by(user_id=self.id)
     return favorited.union(own).order_by(

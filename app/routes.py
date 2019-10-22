@@ -88,3 +88,35 @@ def edit_profile():
     form.username.data = current_user.username
     form.about_me.data = current_user.about_me
   return render_template('edit_profile.html', title='Edit Profile', form=form)
+  
+@app.route('/favorite/<username>')
+@login_required
+def favorite(username):
+  user = User.query.filter_by(username=username).first()
+  if user is None:
+    flash('User {} not found.'.format(username))
+    return redirect(url_for('index'))
+  if user == current_user:
+    flash('You cannot favorite yourself. Your gigs will appear in your favorites automatically.')
+    return redirect(url_for('user', username=username))
+  current_user.favorite(user)
+  db.session.commit()
+  flash('{} is in your favorites!'.format(username))
+  return redirect(url_for('user', username=username))
+  
+@app.route('/unfavorite/<username>')
+@login_required
+def unfavorite(username):
+  user = User.query.filter_by(username=username).first()
+  if user is None:
+    flash('User {} not found.'.format(username))
+    return redirect(url_for('index'))
+  if user == current_user:
+    flash('You cannot unfavorite yourself!')
+    return redirect(url_for('user', username=username))
+  current_user.unfavorite(user)
+  db.session.commit()
+  flash('{} has been removed from your favorites.'.format(username))
+  return redirect(url_for('user', username=username))
+  
+  
