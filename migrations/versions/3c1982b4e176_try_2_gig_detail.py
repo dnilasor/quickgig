@@ -1,7 +1,7 @@
 """try 2 gig detail
 
 Revision ID: 3c1982b4e176
-Revises: 9c6ef231f64c
+Revises: 
 Create Date: 2019-10-18 16:39:23.304859
 
 """
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '3c1982b4e176'
-down_revision = '9c6ef231f64c'
+down_revision = None
 branch_labels = None
 depends_on = None
 
