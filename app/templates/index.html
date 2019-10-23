@@ -2,6 +2,7 @@
 
 {% block content %}
   <h1>Hello, {{ current_user.username }}!</h1>
+  {% if form %}
   <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
@@ -13,7 +14,14 @@
       </p>
       <p>{{ form.submit() }}</p>
   </form>
+  {% endif %}
   {% for gig in gigs %}
-  <div><p>{{ gig.employer.username }} has a gig for you: <b>{{ gig.detail }}</b></p></div>
+    {% include '_gig.html' %}
   {% endfor %}
+  {% if prev_url %}
+  <a href="{{ prev_url }}">Newer gigs</a>
+  {% endif %}
+  {% if next_url %}
+  <a href="{{next_url }}">Older gigs</a>
+  {% endif %}
 {% endblock %}

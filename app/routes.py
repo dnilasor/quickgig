@@ -24,8 +24,14 @@ def index():
     db.session.commit()
     flash('Help is on the way! Your Gig is now live.')
     return redirect(url_for('index'))
-  gigs = Gig.query.all()
-  return render_template('index.html', title='Home', form=form, gigs=gigs)
+  page = request.args.get('page', 1, type=int)
+  gigs = current_user.favorite_gigs().paginate(
+    page, app.config['GIGS_PER_PAGE'], False)
+  next_url = url_for('index', page=gigs.next_num) \
+    if gigs.has_next else None
+  prev_url = url_for('index', page=gigs.prev_num) \
+    if gigs.has_prev else None
+  return render_template('index.html', title='Home', form=form, gigs=gigs.items, next_url=next_url, prev_url=prev_url)
   
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -68,11 +74,14 @@ def signup():
 @login_required
 def user(username):
   user = User.query.filter_by(username=username).first_or_404()
-  gigs = [
- {'employer': user, 'detail': 'Test gig #1'},
-    {'employer': user, 'detail': 'Test gig #1'}
-  ]
-  return render_template('user.html', user=user, gigs=gigs)
+  page = request.args.get('page', 1, type=int)
+  gigs = user.gigs.order_by(Gig.timestamp.desc()).paginate(
+    page, app.config['GIGS_PER_PAGE'], False)
+  next_url = url_for('user', username=user.username, page=gigs.next_num) \
+    if gigs.has_next else None
+  prev_url = url_for('user', username=user.username, page=gigs.prev_num) \
+    if gigs.has_prev else None
+  return render_template('user.html', user=user, gigs=gigs.items, next_url=next_url, prev_url=prev_url)
   
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -118,5 +127,30 @@ def unfavorite(username):
   db.session.commit()
   flash('{} has been removed from your favorites.'.format(username))
   return redirect(url_for('user', username=username))
+  
+@app.route('/explore')
+@login_required
+def explore():
+  page = request.args.get('page', 1, type=int)
+  gigs = Gig.query.order_by(Gig.timestamp.desc()).paginate(
+    page, app.config['GIGS_PER_PAGE'], False)
+  next_url = url_for('explore', page=gigs.next_num) \
+    if gigs.has_next else None
+  prev_url = url_for('explore', page=gigs.prev_num) \
+    if gigs.has_prev else None
+  return render_template('index.html', title='Explore', gigs=gigs.items, next_url=next_url, prev_url=prev_url)
+  
+@app.route('/password_reset_request', methods=['GET', 'POST'])
+def password_reset_request():
+  if current_user.is_authenticated:
+    return redirect(url_for('index'))
+  form = PasswordResetRequestForm()
+  if form.validate_on_submit()
+    user = User.query.filter_by(email=form.email.data).first()
+    if user:
+      send_password_reset_email(user)
+    flash('Check your email for the instructions to reset your password')
+    return redirect(url_for('login'))
+   return render_template('password_reset_request.html', title='Reset Password', form=form)
   
   
