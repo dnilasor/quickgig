@@ -4,6 +4,9 @@ from flask_login import UserMixin
 from app import db
 from app import login
 from hashlib import md5
+import jwt
+from time import time
+from app import app
 
 
 favoriters = db.Table('favoriters',
@@ -59,7 +62,20 @@ class User(UserMixin, db.Model):
     own = Gig.query.filter_by(user_id=self.id)
     return favorited.union(own).order_by(
           Gig.timestamp.desc())
-	
+  
+  def get_password_reset_token(self, expires_in=600):
+    return jwt.encode(
+      {'password_reset': self.id, 'exp': time() + expires_in},
+      app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+  
+  @staticmethod
+  def verify_password_reset_token(token):
+    try:
+      id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])['password_reset']
+    except:
+      return
+    return User.query.get(id)
+
 @login.user_loader
 def load_user(id):
   return User.query.get(int(id))
@@ -69,6 +85,7 @@ class Gig(db.Model):
   detail = db.Column(db.String(140))
   timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+  language = db.Column(db.String(5))
   
   def __repr__(self):
     return '<Gig {}>'.format(self.detail)

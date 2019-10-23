@@ -45,6 +45,12 @@ class GigForm(FlaskForm):
   gig = TextAreaField('Describe your gig here', validators=[DataRequired(), Length(min=1, max=300)])
   submit = SubmitField('Submit')
   
-class ResetPasswordRequestForm(FlaskForm):
-  email = StringField('Email', validators=[DataRequired()])
+class PasswordResetRequestForm(FlaskForm):
+  email = StringField('Enter Your Email Address', validators=[DataRequired()])
+  submit = SubmitField('Request Password Reset')
+  
+class PasswordResetForm(FlaskForm):
+  password = PasswordField('Password', validators=[DataRequired()])
+  password2 = PasswordField(
+    'Re-enter Password', validators=[DataRequired(), EqualTo('password')])
   submit = SubmitField('Request Password Reset')
