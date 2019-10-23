@@ -10,11 +10,11 @@
 		{% if user.last_seen %}<p> Last seen on: {{ user.last_seen }}</p>{% endif %}
          <p>{{ user.favoriters.count() }} followers, {{ user.favorited.count() }} favorites.</p>
         {% if user == current_user %}
-        <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
+        <p><a href="{{ url_for('main.edit_profile') }}">Edit your profile</a></p>
         {% elif not current_user.is_favorite(user) %}
-        <p><a href="{{ url_for('favorite', username=user.username) }}">Favorite</a></p>
+        <p><a href="{{ url_for('main.favorite', username=user.username) }}">Favorite</a></p>
         {% else %}
-        <p><a href="{{ url_for('unfavorite', username=user.username) }}">Unfavorite</a></p>
+        <p><a href="{{ url_for('main.unfavorite', username=user.username) }}">Unfavorite</a></p>
         {% endif %}
       </td>
     </tr>

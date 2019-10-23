@@ -46,7 +46,7 @@ class GigForm(FlaskForm):
   submit = SubmitField('Submit')
   
 class PasswordResetRequestForm(FlaskForm):
-  email = StringField('Enter Your Email Address', validators=[DataRequired()])
+  email = StringField('Email', validators=[DataRequired()])
   submit = SubmitField('Request Password Reset')
   
 class PasswordResetForm(FlaskForm):
