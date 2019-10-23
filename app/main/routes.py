@@ -2,9 +2,11 @@ from flask import render_template, flash, redirect, request, url_for, current_ap
 from flask_login import current_user, login_required
 from app.models import User, Gig
 from app import db
-from app.forms import EditProfileForm, GigForm
+from app.main.forms import EditProfileForm, GigForm
 from datetime import datetime
 from guess_language import guess_language
+from app.main import bp
+from flask_babel import _, lazy_gettext as _l
 
 @bp.before_app_request
 def before_request():
@@ -13,7 +15,7 @@ def before_request():
     db.session.commit()
 
 @bp.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
+@bp.route('/index', methods=['GET', 'POST'])
 @login_required
 
 def index():
@@ -29,7 +31,7 @@ def index():
     return redirect(url_for('main.index'))
   page = request.args.get('page', 1, type=int)
   gigs = current_user.favorite_gigs().paginate(
-    page, app.config['GIGS_PER_PAGE'], False)
+    page, current_app.config['GIGS_PER_PAGE'], False)
   next_url = url_for('main.index', page=gigs.next_num) \
     if gigs.has_next else None
   prev_url = url_for('main.index', page=gigs.prev_num) \
@@ -42,7 +44,7 @@ def user(username):
   user = User.query.filter_by(username=username).first_or_404()
   page = request.args.get('page', 1, type=int)
   gigs = user.gigs.order_by(Gig.timestamp.desc()).paginate(
-    page, app.config['GIGS_PER_PAGE'], False)
+    page, current_app.config['GIGS_PER_PAGE'], False)
   next_url = url_for('main.user', username=user.username, page=gigs.next_num) \
     if gigs.has_next else None
   prev_url = url_for('main.user', username=user.username, page=gigs.prev_num) \
@@ -91,7 +93,7 @@ def unfavorite(username):
     return redirect(url_for('main.user', username=username))
   current_user.unfavorite(user)
   db.session.commit()
-  flash('%(username)s has been removed from your favorites.', username=username))
+  flash(_('User %(username)s has been removed from your favorites.', username=username))
   return redirect(url_for('main.user', username=username))
   
 @bp.route('/explore')
@@ -99,7 +101,7 @@ def unfavorite(username):
 def explore():
   page = request.args.get('page', 1, type=int)
   gigs = Gig.query.order_by(Gig.timestamp.desc()).paginate(
-    page, app.config['GIGS_PER_PAGE'], False)
+    page, current_app.config['GIGS_PER_PAGE'], False)
   next_url = url_for('main.explore', page=gigs.next_num) \
     if gigs.has_next else None
   prev_url = url_for('main.explore', page=gigs.prev_num) \

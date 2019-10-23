@@ -2,6 +2,7 @@ from flask_mail import Message
 from app import mail
 from threading import Thread
 from flask import current_app
+from flask_babel import _, lazy_gettext as _l
 
 def send_async_email(app, msg):
   with app.app_context():

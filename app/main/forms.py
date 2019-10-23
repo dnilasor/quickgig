@@ -7,7 +7,7 @@ from app.models import User
 
 
 class EditProfileForm(FlaskForm):
-  username = StringField((_l'Username'), validators=[DataRequired()])
+  username = StringField(_l('Username'), validators=[DataRequired()])
   about_me = TextAreaField(_l('About me'), validators=[Length(min=0, max=140)])
   submit = SubmitField(_l('Submit'))
   
@@ -22,5 +22,5 @@ class EditProfileForm(FlaskForm):
         raise ValidationError('Please use a different username.')
 
 class GigForm(FlaskForm):
-  gig = TextAreaField((_l('Describe your gig here'), validators=[DataRequired(), Length(min=1, max=300)])
+  gig = TextAreaField(_l('Describe your gig here'), validators=[DataRequired(), Length(min=1, max=300)])
   submit = SubmitField(_l('Submit'))

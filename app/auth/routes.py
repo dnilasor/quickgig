@@ -2,10 +2,12 @@ from flask import render_template, flash, redirect, request, url_for
 from flask_login import current_user, login_user, logout_user
 from app.models import User
 from app import db
+from app.auth import bp
 from app.auth.forms import LoginForm, SignupForm, PasswordResetRequestForm, PasswordResetForm
 from werkzeug.urls import url_parse
 from datetime import datetime
 from app.auth.email import send_password_reset_email
+from flask_babel import _, lazy_gettext as _l
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():

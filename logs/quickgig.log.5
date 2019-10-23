@@ -1,0 +1,130 @@
+2019-10-22 13:54:41,869 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-22 13:54:49,899 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-22 13:54:57,675 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-22 14:11:05,257 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-22 14:11:54,232 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-22 14:12:44,995 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-22 14:13:21,379 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-22 14:13:52,324 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-22 14:14:52,964 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-22 14:15:13,899 ERROR: Exception on /user/test [GET] [in /home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/climb/quickgig/app/routes.py", line 75, in user
+    return render_template('user.html', user=user, gigs=gigs)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/templating.py", line 140, in render_template
+    ctx.app,
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/climb/quickgig/app/templates/user.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/climb/quickgig/app/templates/base.html", line 30, in top-level template code
+    {% block content %}{% endblock %}
+  File "/home/climb/quickgig/app/templates/user.html", line 11, in block "content"
+    <p>{{ user.favoriters.count() }} followers, {{ user.followed.count() }} favorites.</p>
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/environment.py", line 430, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'app.models.User object' has no attribute 'followed'
+2019-10-22 14:15:54,860 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-23 07:15:59,304 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-23 07:45:16,004 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-23 07:56:10,793 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-23 08:09:10,449 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-23 08:09:17,349 ERROR: Exception on /explore [GET] [in /home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/climb/quickgig/app/routes.py", line 129, in explore
+    page, app.config['POSTS_PER_PAGE'], False)
+KeyError: 'POSTS_PER_PAGE'
+2019-10-23 08:10:22,990 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-23 08:21:22,591 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-23 08:27:35,416 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:37]
+2019-10-23 08:33:28,682 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
+2019-10-23 08:57:51,540 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
+2019-10-23 08:58:20,743 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
+2019-10-23 08:59:07,586 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
+2019-10-23 08:59:27,991 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
+2019-10-23 08:59:45,899 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
+2019-10-23 09:48:25,264 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
+2019-10-23 09:48:57,810 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
+2019-10-23 09:49:20,071 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
+2019-10-23 09:49:29,037 ERROR: Exception on /login [GET] [in /home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/climb/quickgig/app/routes.py", line 52, in login
+    return render_template('login.html', title='Log In', form=form)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/templating.py", line 140, in render_template
+    ctx.app,
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/climb/quickgig/app/templates/login.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/climb/quickgig/app/templates/base.html", line 31, in top-level template code
+    {% block content %}{% endblock %}
+  File "/home/climb/quickgig/app/templates/login.html", line 24, in block "content"
+    <p>Forgot Your Password? <a href="{{url_for('resest_password_request') }}">Click to Reset It</a></p>
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/helpers.py", line 370, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 2215, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/helpers.py", line 358, in url_for
+    endpoint, values, method=method, force_external=external
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/werkzeug/routing.py", line 2020, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'resest_password_request'. Did you mean 'password_reset_request' instead?
+2019-10-23 09:50:38,830 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
