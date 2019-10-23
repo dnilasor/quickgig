@@ -6,6 +6,7 @@ from app.forms import LoginForm, SignupForm, EditProfileForm, GigForm, PasswordR
 from werkzeug.urls import url_parse
 from datetime import datetime
 from app.email import send_password_reset_email
+from guess_language import guess_language
 
 @app.before_request
 def before_request():
@@ -20,7 +21,10 @@ def before_request():
 def index():
   form = GigForm()
   if form.validate_on_submit():
-    gig = Gig(detail=form.gig.data, employer=current_user)
+    language = guess_language(form.gig.data)
+    if language == 'UNKNOWN' or len(language) > 5:
+      language = ''
+    gig = Gig(detail=form.gig.data, employer=current_user, language=language)
     db.session.add(gig)
     db.session.commit()
     flash('Help is on the way! Your Gig is now live.')
