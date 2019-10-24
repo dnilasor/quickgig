@@ -2,19 +2,18 @@
 
 {% block content %}
   <h1>Hello, {{ current_user.username }}!</h1>
-  {% if form %}
-  <form action="" method="post">
-    {{ form.hidden_tag() }}
-    <p>
-      {{form.gig.label }}<br>
-      {{ form.gig(cols=32, rows=8) }}<br>
-      {% for error in form.gig.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-      </p>
-      <p>{{ form.submit() }}</p>
-  </form>
-  {% endif %}
+
+{% from "_formhelpers.html" import render_field %}
+<form method=post>
+  <d1>
+   {{  render_field(form.select) }}
+   <p>
+   {{ render_field(form.search) }}
+   </d1>
+   <p><input type=submit value=Search>
+ </form>
+
+  <h1>Latest Gigs from Your Favorites:</h1>
   {% for gig in gigs %}
     {% include '_gig.html' %}
   {% endfor %}

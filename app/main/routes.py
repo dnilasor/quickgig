@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, request, url_for, current_ap
 from flask_login import current_user, login_required
 from app.models import User, Gig
 from app import db
-from app.main.forms import EditProfileForm, GigForm
+from app.main.forms import EditProfileForm, GigForm, GigSearchForm
 from datetime import datetime
 from guess_language import guess_language
 from app.main import bp
@@ -17,8 +17,37 @@ def before_request():
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required
-
 def index():
+  search = GigSearchForm()
+  if request.method == 'POST':
+    return search_results(search)
+  page = request.args.get('page', 1, type=int)
+  gigs = current_user.favorite_gigs().paginate(
+    page, current_app.config['GIGS_PER_PAGE'], False)
+  next_url = url_for('main.index', page=gigs.next_num) \
+    if gigs.has_next else None
+  prev_url = url_for('main.index', page=gigs.prev_num) \
+    if gigs.has_prev else None
+  return render_template('index.html', title='Home', form=search, gigs=gigs.items, next_url=next_url, prev_url=prev_url)
+  
+@bp.route('/results')
+def search_results(search):
+  results = []
+  search_string = search.data['search']
+  
+  if search.data['search'] == '':
+    results = db_session.query(Neighborhood).all()
+	
+  if not results:
+    flash('No results found!')
+    return redirect(url_for('main.index'))
+  else:
+    #display results
+    return render_template('results.html', results=results)
+
+@bp.route('/create', methods=['GET', 'POST'])
+@login_required 
+def create():
   form = GigForm()
   if form.validate_on_submit():
     language = guess_language(form.gig.data)
@@ -29,15 +58,7 @@ def index():
     db.session.commit()
     flash('Help is on the way! Your Gig is now live.')
     return redirect(url_for('main.index'))
-  page = request.args.get('page', 1, type=int)
-  gigs = current_user.favorite_gigs().paginate(
-    page, current_app.config['GIGS_PER_PAGE'], False)
-  next_url = url_for('main.index', page=gigs.next_num) \
-    if gigs.has_next else None
-  prev_url = url_for('main.index', page=gigs.prev_num) \
-    if gigs.has_prev else None
-  return render_template('index.html', title='Home', form=form, gigs=gigs.items, next_url=next_url, prev_url=prev_url)
-  
+	
 @bp.route('/user/<username>')
 @login_required
 def user(username):

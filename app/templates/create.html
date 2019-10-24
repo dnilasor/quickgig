@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<title> Post a New Gig</title>  
+  {% if form %}
+  {% from "_formhelpers.html" import render_field %}
+  <form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+	  {{ render_field(form.neighborhood) }}
+      {{form.gig.label }}<br>
+      {{ form.gig(cols=32, rows=8) }}<br>
+      {% for error in form.gig.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+      </p>
+      <p>{{ form.submit() }}</p>
+  </form>
+  {% endif %}
