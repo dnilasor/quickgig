@@ -1,25 +1,74 @@
-{% extends "base.html" %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+
+<body>
+
+
+<div class="container" align="center">
+  <img src={{ url_for('static', filename='logo.jpg') }}>
+    <title>QuickGig</title>
+    <h1>QuickGig</h1>
+
+<form>
+  <div class="form-group">
+     <label class="sr-only" for="inlineFormInputGroup">Username</label>
+  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Remember Me</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+
+<p>
+
+<p>
+
+<div class="container">
+
 
 {% block content %}
-  <h1>Log In</h1>
-  <form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <p>
-      {{ form.username.label }}<br>
-      {{ form.username(size=32) }}<br>
-	  {% for error in form.username.errors %}
-	  <span style="color: red;">[{{ error }}]</span>
-	  {% endfor %}
-    </p>
-    <p>
-      {{ form.password.label }}<br>
-      {{ form.password(size=32) }}<br>
-	  {% for error in form.password.errors %}
-	  <span style="color: red;">[{{ error }}]</span>
-	  {% endfor %}
-    </p>
-    <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-    <p>{{ form.submit() }}</p>
-  </form>
-  <p>New to QuickGig? <a href="{{ url_for('signup') }}">Click here to sign up!</a></p>
+Log In
+{{ form.hidden_tag() }}
+{{ form.username.label }}
+{{ form.username(size=32) }}
+{% for error in form.username.errors %} [{{ error }}] {% endfor %}
+
+{{ form.password.label }}
+{{ form.password(size=32) }}
+{% for error in form.password.errors %} [{{ error }}] {% endfor %}
+
+{{ form.remember_me() }} {{ form.remember_me.label }}
+
+{{ form.submit() }}
+
+New to QuickGig? <a href="{{ url_for('signup') }}">Click here to sign up!</a>
+ 
+</div>
+
 {% endblock %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
