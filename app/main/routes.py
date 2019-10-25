@@ -37,6 +37,21 @@ def index():
   prev_url = url_for('main.index', page=gigs.prev_num) \
     if gigs.has_prev else None
   return render_template('index.html', title='Home', form=form, gigs=gigs.items, next_url=next_url, prev_url=prev_url)
+
+@bp.route('/create', methods=['GET', 'POST'])
+@login_required  
+def create():
+  form = GigForm()
+  if form.validate_on_submit():
+    language = guess_language(form.gig.data)
+    if language == 'UNKNOWN' or len(language) > 5:
+      language = ''
+    gig = Gig(detail=form.gig.data, employer=current_user, language=language)
+    db.session.add(gig)
+    db.session.commit()
+    flash('Help is on the way! Your Gig is now live.')
+    return redirect(url_for('main.create'))
+  return render_template('index.html', title='Home', form=form)
   
 @bp.route('/user/<username>')
 @login_required

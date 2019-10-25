@@ -1,4 +1,4 @@
-2019-10-23 09:50:42,393 ERROR: Exception on /login [GET] [in /home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py:1891]
+2019-10-23 13:14:27,053 ERROR: Exception on /index [GET] [in /home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py:1891]
 Traceback (most recent call last):
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,8 +12,10 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/climb/quickgig/app/routes.py", line 52, in login
-    return render_template('login.html', title='Log In', form=form)
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/climb/quickgig/app/main/routes.py", line 38, in index
+    return render_template('index.html', title='Home', form=form, gigs=gigs.items, next_url=next_url, prev_url=prev_url)
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/templating.py", line 140, in render_template
     ctx.app,
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/templating.py", line 120, in _render
@@ -26,24 +28,27 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/climb/quickgig/app/templates/login.html", line 1, in top-level template code
+  File "/home/climb/quickgig/app/templates/index.html", line 1, in top-level template code
     {% extends "base.html" %}
   File "/home/climb/quickgig/app/templates/base.html", line 31, in top-level template code
     {% block content %}{% endblock %}
-  File "/home/climb/quickgig/app/templates/login.html", line 24, in block "content"
-    <p>Forgot Your Password? <a href="{{url_for('resest_password_request') }}">Click to Reset It</a></p>
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/helpers.py", line 370, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 2215, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/helpers.py", line 358, in url_for
-    endpoint, values, method=method, force_external=external
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/werkzeug/routing.py", line 2020, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'resest_password_request'. Did you mean 'password_reset_request' instead?
-2019-10-23 09:50:45,215 ERROR: Exception on /login [GET] [in /home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py:1891]
+  File "/home/climb/quickgig/app/templates/index.html", line 9, in block "content"
+    {{form.gig.label }}<br>
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/markupsafe/_native.py", line 27, in escape
+    return Markup(s.__html__())
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/wtforms/fields/core.py", line 393, in __html__
+    return self()
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/wtforms/fields/core.py", line 402, in __call__
+    return widgets.HTMLString('<label %s>%s</label>' % (attributes, text or self.text))
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask_babel/speaklater.py", line 23, in __str__
+    return text_type(self._func(*self._args, **self._kwargs))
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask_babel/__init__.py", line 552, in gettext
+    t = get_translations()
+  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask_babel/__init__.py", line 223, in get_translations
+    babel = current_app.extensions['babel']
+KeyError: 'babel'
+2019-10-23 13:40:03,704 INFO: QuickGig startup [in /home/climb/quickgig/app/__init__.py:73]
+2019-10-23 13:40:12,272 ERROR: Exception on /auth/login [GET] [in /home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py:1891]
 Traceback (most recent call last):
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -57,8 +62,8 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/climb/quickgig/app/routes.py", line 52, in login
-    return render_template('login.html', title='Log In', form=form)
+  File "/home/climb/quickgig/app/auth/routes.py", line 27, in login
+    return render_template('auth/login.html', title='Log In', form=form)
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/templating.py", line 140, in render_template
     ctx.app,
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/templating.py", line 120, in _render
@@ -71,12 +76,12 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/climb/quickgig/app/templates/login.html", line 1, in top-level template code
+  File "/home/climb/quickgig/app/templates/auth/login.html", line 1, in top-level template code
     {% extends "base.html" %}
   File "/home/climb/quickgig/app/templates/base.html", line 31, in top-level template code
     {% block content %}{% endblock %}
-  File "/home/climb/quickgig/app/templates/login.html", line 24, in block "content"
-    <p>Forgot Your Password? <a href="{{url_for('resest_password_request') }}">Click to Reset It</a></p>
+  File "/home/climb/quickgig/app/templates/auth/login.html", line 24, in block "content"
+    <p>Forgot Your Password? <a href="{{url_for('password_reset_request') }}">Click to Reset It</a></p>
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/helpers.py", line 370, in url_for
     return appctx.app.handle_url_build_error(error, endpoint, values)
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 2215, in handle_url_build_error
@@ -87,42 +92,5 @@ Traceback (most recent call last):
     endpoint, values, method=method, force_external=external
   File "/home/climb/quickgig/venv/lib/python3.6/site-packages/werkzeug/routing.py", line 2020, in build
     raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'resest_password_request'. Did you mean 'password_reset_request' instead?
-2019-10-23 09:54:13,577 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
-2019-10-23 09:55:46,328 ERROR: Exception on /password_reset_request [POST] [in /home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py:1891]
-Traceback (most recent call last):
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/climb/quickgig/app/routes.py", line 152, in password_reset_request
-    send_password_reset_email(user)
-  File "/home/climb/quickgig/app/email.py", line 18, in send_password_reset_email
-    html_body=render_template('email/password_reset,html', user=user, token=token))
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/templating.py", line 138, in render_template
-    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/environment.py", line 869, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/environment.py", line 830, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/environment.py", line 804, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/jinja2/loaders.py", line 113, in load
-    source, filename, uptodate = self.get_source(environment, name)
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/templating.py", line 60, in get_source
-    return self._get_source_fast(environment, template)
-  File "/home/climb/quickgig/venv/lib/python3.6/site-packages/flask/templating.py", line 89, in _get_source_fast
-    raise TemplateNotFound(template)
-jinja2.exceptions.TemplateNotFound: email/password_reset,html
-2019-10-23 09:56:29,881 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
-2019-10-23 09:57:36,929 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
-2019-10-23 10:03:27,082 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:39]
-2019-10-23 10:12:17,870 INFO: Quickgig startup [in /home/climb/quickgig/app/__init__.py:41]
+werkzeug.routing.BuildError: Could not build url for endpoint 'password_reset_request'. Did you mean 'auth.password_reset_request' instead?
+2019-10-23 13:41:32,493 INFO: QuickGig startup [in /home/climb/quickgig/app/__init__.py:73]
