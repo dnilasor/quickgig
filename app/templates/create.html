@@ -5,8 +5,14 @@
   <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
-      {{form.gig.label }}<br>
+      {{ form.gig.label }}<br>
       {{ form.gig(cols=32, rows=8) }}<br>
+      {% for error in form.gig.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+	  
+	  {{ form.neighborhood.label }}<br>
+	  {{ form.neighborhood }}
       {% for error in form.gig.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}

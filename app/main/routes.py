@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, request, url_for, current_app
 from flask_login import current_user, login_required
-from app.models import User, Gig
+from app.models import User, Gig, Neighborhood
 from app import db
 from app.main.forms import EditProfileForm, GigForm
 from datetime import datetime
@@ -38,20 +38,22 @@ def index():
     if gigs.has_prev else None
   return render_template('index.html', title='Home', form=form, gigs=gigs.items, next_url=next_url, prev_url=prev_url)
 
+# language logic for later
+# language = guess_language(form.gig.data)
+# if language == 'UNKNOWN' or len(language) > 5:
+  # language = ''
+# also add to Gig def attr list below
 @bp.route('/create', methods=['GET', 'POST'])
 @login_required  
 def create():
   form = GigForm()
   if form.validate_on_submit():
-    language = guess_language(form.gig.data)
-    if language == 'UNKNOWN' or len(language) > 5:
-      language = ''
-    gig = Gig(detail=form.gig.data, employer=current_user, language=language)
+    gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_name=str(form.neighborhood.data))
     db.session.add(gig)
     db.session.commit()
     flash('Help is on the way! Your Gig is now live.')
     return redirect(url_for('main.create'))
-  return render_template('index.html', title='Home', form=form)
+  return render_template('create.html', title='Create Gig', form=form)
   
 @bp.route('/user/<username>')
 @login_required

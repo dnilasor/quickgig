@@ -85,8 +85,18 @@ class Gig(db.Model):
   timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
   language = db.Column(db.String(5))
-  neighborhood = db.Column(db.String(40))
+  neighborhood_name = db.Column(db.String(40), db.ForeignKey('neighborhood.name'))
   
   def __repr__(self):
     return '<Gig {}>'.format(self.detail)
+	
+
+
+class Neighborhood(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(40))
+  gigs = db.relationship('Gig', backref='hood_name', lazy='dynamic')
+  
+  def __repr__(self):
+    return self.name
 	
