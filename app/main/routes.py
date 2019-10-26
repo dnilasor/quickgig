@@ -20,16 +20,16 @@ def before_request():
 
 def index():
   # Removing the block
-  # form = GigForm()
-  # if form.validate_on_submit():
-    # language = guess_language(form.gig.data)
-    # if language == 'UNKNOWN' or len(language) > 5:
-      # language = ''
-    # gig = Gig(detail=form.gig.data, employer=current_user, language=language)
-    # db.session.add(gig)
-    # db.session.commit()
-    # flash('Help is on the way! Your Gig is now live.')
-    # return redirect(url_for('main.index'))
+  form = GigForm()
+  if form.validate_on_submit():
+    language = guess_language(form.gig.data)
+    if language == 'UNKNOWN' or len(language) > 5:
+      language = ''
+    gig = Gig(detail=form.gig.data, employer=current_user, language=language)
+    db.session.add(gig)
+    db.session.commit()
+    flash('Help is on the way! Your Gig is now live.')
+    return redirect(url_for('main.index'))
   page = request.args.get('page', 1, type=int)
   gigs = current_user.favorite_gigs().paginate(
     page, current_app.config['GIGS_PER_PAGE'], False)
