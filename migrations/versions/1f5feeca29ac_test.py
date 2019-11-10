@@ -1,7 +1,7 @@
 """test
 
 Revision ID: 1f5feeca29ac
-Revises: 
+Revises:
 Create Date: 2019-10-26 00:08:45.327858
 
 """
@@ -48,8 +48,8 @@ def upgrade():
     sa.Column('timestamp', sa.DateTime(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('language', sa.String(length=5), nullable=True),
-    sa.Column('neighborhood_name', sa.String(length=40), nullable=True),
-    sa.ForeignKeyConstraint(['neighborhood_name'], ['neighborhood.name'], ),
+    sa.Column('neighborhood_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['neighborhood_id'], ['neighborhood.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
