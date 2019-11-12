@@ -2,7 +2,8 @@ from flask import render_template, flash, redirect, request, url_for, current_ap
 from flask_login import current_user, login_required
 from app.models import User, Gig, Neighborhood
 from app import db
-from app.main.forms import EditProfileForm, GigForm
+from app.main.forms import EditProfileForm, GigForm, SearchForm
+from app.main.tables import Results
 from datetime import datetime
 from guess_language import guess_language
 from app.main import bp
@@ -51,7 +52,6 @@ def create():
   form = GigForm()
   if form.validate_on_submit():
     neighborhood_name = form.neighborhood.data.name
-    print(neighborhood_name)
     neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
     neighborhood_id = neighborhood.id
     gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id)
@@ -130,3 +130,36 @@ def explore():
   prev_url = url_for('main.explore', page=gigs.prev_num) \
     if gigs.has_prev else None
   return render_template('index.html', title='Explore', gigs=gigs.items, next_url=next_url, prev_url=prev_url)
+
+@bp.route('/search', methods = ['GET', 'POST'])
+@login_required
+def search():
+    form = SearchForm()
+    if form.validate_on_submit():
+        # I decided to explicitly assign this piece of data to the "search" var
+        # here but probably it'll be better to pass an object containing all of
+        # the search filters selected so users can search by multiple attributes
+        # and then we can sort out what to do with each attribute in the results function below.
+        search = form.neighborhood_search.data.name
+        return search_results(search)
+    return render_template('search.html', form=form)
+
+@bp.route('/search_results')
+def search_results(search):
+    results = []
+    search_filter = search
+
+## K implement a search feature that works now
+    if search_filter:
+        if search == # describe search data here
+        query = neighborhood = Neighborhood.query.filter(and_(Neighborhood.name == neighborhood_name))
+        results = query.all()
+
+    if not results:
+        flash('No results found! Please try another search.')
+        return redirect('/search')
+    else:
+        #display search results
+        table = Results(results)
+        table.border = True
+        return render_template('search_results.html', table=table)
