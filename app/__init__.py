@@ -8,7 +8,8 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_moment import Moment
 from flask_babel import Babel, lazy_gettext as _l
-
+from flask_admin import Admin
+from flask_bootstrap import Bootstrap
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -17,9 +18,10 @@ login.login_view = 'auth.login'
 # login.login_message = _l('Please log in to access this page.')
 
 mail = Mail()
-# bootstrap = Bootstrap()
+bootstrap = Bootstrap()
 moment = Moment()
 babel = Babel()
+app_admin = Admin(name='Dashboard', template_mode='bootstrap3')
 
 
 def create_app(config_class=Config):
@@ -32,7 +34,9 @@ def create_app(config_class=Config):
   mail.init_app(app)
   moment.init_app(app)
   babel.init_app(app)
-  
+  app_admin.init_app(app)
+  bootstrap.init_app(app)
+
   from app.errors import bp as errors_bp
   app.register_blueprint(errors_bp)
 
@@ -41,6 +45,9 @@ def create_app(config_class=Config):
 
   from app.main import bp as main_bp
   app.register_blueprint(main_bp)
+
+  from app.admin import add_admin_views
+  add_admin_views()
 
   if not app.debug and not app.testing:
     if app.config['MAIL_SERVER']:

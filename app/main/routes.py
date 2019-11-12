@@ -46,17 +46,21 @@ def index():
   # language = ''
 # also add to Gig def attr list below
 @bp.route('/create', methods=['GET', 'POST'])
-@login_required  
+@login_required
 def create():
   form = GigForm()
   if form.validate_on_submit():
-    gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_name=str(form.neighborhood.data))
+    neighborhood_name = form.neighborhood.data.name
+    print(neighborhood_name)
+    neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
+    neighborhood_id = neighborhood.id
+    gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id)
     db.session.add(gig)
     db.session.commit()
     flash('Help is on the way! Your Gig is now live.')
     return redirect(url_for('main.create'))
   return render_template('create.html', title='Create Gig', form=form)
-  
+
 @bp.route('/user/<username>')
 @login_required
 def user(username):
@@ -69,7 +73,7 @@ def user(username):
   prev_url = url_for('main.user', username=user.username, page=gigs.prev_num) \
     if gigs.has_prev else None
   return render_template('user.html', user=user, gigs=gigs.items, next_url=next_url, prev_url=prev_url)
-  
+
 @bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -84,7 +88,7 @@ def edit_profile():
     form.username.data = current_user.username
     form.about_me.data = current_user.about_me
   return render_template('edit_profile.html', title='Edit Your Profile', form=form)
-  
+
 @bp.route('/favorite/<username>')
 @login_required
 def favorite(username):
@@ -99,7 +103,7 @@ def favorite(username):
   db.session.commit()
   flash(_('%(username)s is in your favorites!', username=username))
   return redirect(url_for('main.user', username=username))
-  
+
 @bp.route('/unfavorite/<username>')
 @login_required
 def unfavorite(username):
@@ -114,7 +118,7 @@ def unfavorite(username):
   db.session.commit()
   flash(_('User %(username)s has been removed from your favorites.', username=username))
   return redirect(url_for('main.user', username=username))
-  
+
 @bp.route('/explore')
 @login_required
 def explore():

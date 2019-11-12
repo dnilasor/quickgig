@@ -28,24 +28,24 @@ class User(UserMixin, db.Model):
 	primaryjoin=(favoriters.c.favoriter_id == id),
     secondaryjoin=(favoriters.c.favorited_id == id),
     backref=db.backref('favoriters', lazy='dynamic'), lazy='dynamic')
-  
+
   def __repr__(self):
     return '<User {}>'.format(self.username)
-	
+
   def set_password(self, password):
     self.password_hash = generate_password_hash(password)
-	
+
   def check_password(self, password):
     return check_password_hash(self.password_hash, password)
-  
+
   def avatar(self, size):
     digest = md5(self.email.lower().encode('utf-8')).hexdigest()
-    return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)	
-	
+    return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
+
   def favorite(self, user):
     if not self.is_favorite(user):
       self.favorited.append(user)
-  
+
   def unfavorite(self, user):
     if self.is_favorite(user):
       self.favorited.remove(user)
@@ -61,12 +61,12 @@ class User(UserMixin, db.Model):
     own = Gig.query.filter_by(user_id=self.id)
     return favorited.union(own).order_by(
           Gig.timestamp.desc())
-  
+
   def get_password_reset_token(self, expires_in=600):
     return jwt.encode(
       {'password_reset': self.id, 'exp': time() + expires_in},
       current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
-  
+
   @staticmethod
   def verify_password_reset_token(token):
     try:
@@ -78,25 +78,24 @@ class User(UserMixin, db.Model):
 @login.user_loader
 def load_user(id):
   return User.query.get(int(id))
-	
+
 class Gig(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   detail = db.Column(db.String(140))
   timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
   language = db.Column(db.String(5))
-  neighborhood_name = db.Column(db.String(40), db.ForeignKey('neighborhood.name'))
-  
+  neighborhood_id = db.Column(db.Integer, db.ForeignKey('neighborhood.id'))
+
   def __repr__(self):
     return '<Gig {}>'.format(self.detail)
-	
+
 
 
 class Neighborhood(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(40))
+  name = db.Column(db.String(40), index=True, unique=True)
   gigs = db.relationship('Gig', backref='hood_name', lazy='dynamic')
-  
+
   def __repr__(self):
     return self.name
-	

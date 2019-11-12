@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <div class="container" align="center">
   <h1>Hello, {{ current_user.username }}!</h1>
   <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
-      {{ form.gig.label }}<br>
-      {{ form.gig(cols=32, rows=8) }}<br>
+      <div class="form-group">
+      {{ form.gig.label(for="exampleTextarea") }}<br>
+      {{ form.gig(cols=32, rows=8, class="form-control") }}<br>
       {% for error in form.gig.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
+	  </div>
 	  
 	  {{ form.neighborhood.label }}<br>
 	  {{ form.neighborhood }}
@@ -17,6 +20,7 @@
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
       </p>
-      <p>{{ form.submit() }}</p>
+      <p>{{ form.submit(class="btn btn-primary") }}</p>
   </form>
+  </div>
 {% endblock %}

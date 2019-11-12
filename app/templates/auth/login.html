@@ -1,26 +1,48 @@
 {% extends "base.html" %}
 
+<body>
 {% block content %}
-  <h1>Log In</h1>
-  <form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <p>
-      {{ form.username.label }}<br>
-      {{ form.username(size=32) }}<br>
-	  {% for error in form.username.errors %}
-	  <span style="color: red;">[{{ error }}]</span>
-	  {% endfor %}
-    </p>
-    <p>
-      {{ form.password.label }}<br>
-      {{ form.password(size=32) }}<br>
-	  {% for error in form.password.errors %}
-	  <span style="color: red;">[{{ error }}]</span>
-	  {% endfor %}
-    </p>
-    <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-    <p>{{ form.submit() }}</p>
-  </form>
-  <p>Forgot Your Password? <a href="{{url_for('auth.password_reset_request') }}">Click to Reset It</a></p>
-  <p>New to QuickGig? <a href="{{ url_for('auth.signup') }}">Click here to sign up!</a></p>
+
+<div class="container" align="center">
+  <img src={{ url_for('static', filename='logo.jpg') }}>
+    <title>QuickGig</title>
+    <h1>QuickGig</h1>
+</p>
+<form action="" method="post" novalidate>
+
+
+<div class="form-group">
+{{ form.hidden_tag() }}
+{{ form.username.label(class="sr-only") }}
+<div class="col-sm-4 col-sm-offset-4">
+{{ form.username(size=32, class="form-control", placeholder="Username") }}
+{% for error in form.username.errors %} [{{ error }}] {% endfor %}
+</div>
+</div>
+
+<div class="form-group">
+<div class="col-sm-4 col-sm-offset-4">
+{{ form.password.label(class="sr-only") }}
+{{ form.password(size=32, class="form-control", placeholder="Password") }}
+{% for error in form.password.errors %} [{{ error }}] {% endfor %}
+</div>
+</div>
+
+<div class="form-check">
+{{ form.remember_me(class="form-check-input") }}
+{{ form.remember_me.label(class="form-check-labe") }}
+</div>
+  
+
+{{ form.submit(class="btn btn-primary") }}
+</form>
+<p>
+  <p><small>Forgot Your Password? <a href="{{url_for('auth.password_reset_request') }}">Click to reset password</a></small></p>
+  <p><small>New to QuickGig? <a href="{{ url_for('auth.signup') }}">Click here to sign up!</a></small></p>
+
+</div>
+
 {% endblock %}
+
+  </body>
+</html>
