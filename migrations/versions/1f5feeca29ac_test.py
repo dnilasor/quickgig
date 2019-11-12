@@ -23,6 +23,7 @@ def upgrade():
     sa.Column('name', sa.String(length=40), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_index(op.f('ix_neighborhood_name'), 'neighborhood', ['name'], unique=True)
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=64), nullable=True),
