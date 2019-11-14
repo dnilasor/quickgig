@@ -148,22 +148,31 @@ def search_results(neighborhood_id):
     query = Gig.query
     if neighborhood_id:
         query = query.filter(Gig.neighborhood_id == neighborhood_id)
+
+    # Add more filter attributes here and then catch the error, use flash message if no filters are passed
+
     results = query.all()
     table = Results(results)
     table.border = True
     return render_template('search_results.html', table=table)
 
-## K implement a search feature that works now
-    # if search_filter:
-    #     if search == # describe search data here
-    #     query = neighborhood = Neighborhood.query.filter(and_(Neighborhood.name == neighborhood_name))
-    #     results = query.all()
-    #
-    # if not results:
-    #     flash('No results found! Please try another search.')
-    #     return redirect('/search')
-    # else:
-    #     #display search results
-    #     table = Results(results)
-    #     table.border = True
-    #     return render_template('search_results.html', table=table)
+# Below is a better search function that returns tuples of results from a join of the Neighborhood and Gig tables.
+# I think this is the best way to include Name instead of ID (or even in addition to it)
+# BUT I have been unable to use it with the Table class because it doesn't accept tuples inside of tuples -
+# it is looking for a simple tuple representing a database row it seems, not a join
+# so to get this to work I tried not using the table and just adding an HTML table in
+# the Jinja2 template "search_results.html" (see comments there for implementation detail)
+# the problem with that is I couldn't figure out what the join values are actually called in the template
+# so I cannot yet display the data : )
+
+# @bp.route('/search_results')
+# def search_results(neighborhood_id):
+#     results = []
+#     query = Gig.query
+#     if neighborhood_id:
+#         query = (db.session.query(Gig, Neighborhood).join(Neighborhood))
+#     results = query.all()
+#
+#     # table = Results(results)
+#     # table.border = True
+#     return render_template('search_results.html', results=results)
