@@ -147,11 +147,12 @@ def search_results(neighborhood_id):
     results = []
     query = Gig.query
     if neighborhood_id:
-        query = query.filter(Gig.neighborhood_id == neighborhood_id)
+        query = (db.session.query(Gig, Neighborhood).join(Neighborhood))
     results = query.all()
-    table = Results(results)
-    table.border = True
-    return render_template('search_results.html', table=table)
+
+    # table = Results(results)
+    # table.border = True
+    return render_template('search_results.html', results=results)
 
 ## K implement a search feature that works now
     # if search_filter:
