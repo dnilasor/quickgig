@@ -1,3 +1,6 @@
+*.db
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -122,4 +125,8 @@ celerybeat-schedule
 dmypy.json
 
 # Pyre type checker
+<<<<<<< HEAD
 .pyre/.DS_Store
+=======
+.pyre/
+>>>>>>> 6092009c0812a3e97db07d5ba1046429dab7c205

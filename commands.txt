@@ -1,3 +1,16 @@
 source venv/bin/activate
 export FLASK_APP = quickgig.py
 
+
+docker run --name mysql -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes \
+    -e MYSQL_DATABASE=quickgig -e MYSQL_USER=quickgig \
+    -e MYSQL_PASSWORD=password \
+    mysql/mysql-server:5.7
+
+
+docker run --name quickgig -d -p 8000:5000 --rm -e SECRET_KEY=you-will-never-guess \
+    --link mysql:dbserver \
+    -e DATABASE_URL=mysql+pymysql://quickgig:password@dbserver/quickgig \
+    quickgig:latest
+
+docker run -ti quickgig:latest
