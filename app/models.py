@@ -95,8 +95,6 @@ class Gig(db.Model):
 class Neighborhood(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(40), index=True, unique=True)
-# the gigs attribute isn't an array so won't really work for sorting. we can just sort on the Gig table
-  gigs = db.relationship('Gig', backref='hood_name', lazy='dynamic')
 
   def __repr__(self):
     return self.name
