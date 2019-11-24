@@ -139,11 +139,11 @@ def search():
         neighborhood_name = form.neighborhood_search.data.name
         neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
         neighborhood_id = neighborhood.id
-        return search_results(neighborhood_id)
+        return search_results(neighborhood_id, neighborhood_name)
     return render_template('search.html', form=form)
 
 @bp.route('/search_results')
-def search_results(neighborhood_id):
+def search_results(neighborhood_id, neighborhood_name):
     results = []
     query = Gig.query
     if neighborhood_id:
@@ -154,7 +154,9 @@ def search_results(neighborhood_id):
     results = query.all()
     table = Results(results)
     table.border = True
+    flash(_(‘The %(neighborhood_name)s Neighborhood has the following Gigs available:’, neighborhood_name=neighborhood_name))
     return render_template('search_results.html', table=table)
+
 
 # Below is a better search function that returns tuples of results from a join of the Neighborhood and Gig tables.
 # I think this is the best way to include Name instead of ID (or even in addition to it)
