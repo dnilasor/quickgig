@@ -11,7 +11,7 @@ class EditProfileForm(FlaskForm):
   username = StringField(_l('Username'), validators=[DataRequired()])
   about_me = TextAreaField(_l('About me'), validators=[Length(min=0, max=140)])
   submit = SubmitField(_l('Submit'))
-  
+
   def __init__(self, original_username, *args, **kwargs):
     super(EditProfileForm, self).__init__(*args, **kwargs)
     self.original_username = original_username
@@ -25,4 +25,8 @@ class EditProfileForm(FlaskForm):
 class GigForm(FlaskForm):
   gig = TextAreaField(_l('Describe your gig here'), validators=[DataRequired(), Length(min=1, max=300)])
   neighborhood = QuerySelectField(query_factory=lambda: Neighborhood.query.all(), get_label="name", allow_blank=False)
+  submit = SubmitField(_l('Submit'))
+
+class SearchForm(FlaskForm):
+  neighborhood_search = QuerySelectField(query_factory=lambda: Neighborhood.query.all(), get_label="name", allow_blank=False)
   submit = SubmitField(_l('Submit'))

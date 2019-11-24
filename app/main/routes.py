@@ -2,7 +2,8 @@ from flask import render_template, flash, redirect, request, url_for, current_ap
 from flask_login import current_user, login_required
 from app.models import User, Gig, Neighborhood
 from app import db
-from app.main.forms import EditProfileForm, GigForm
+from app.main.forms import EditProfileForm, GigForm, SearchForm
+from app.main.tables import Results
 from datetime import datetime
 from guess_language import guess_language
 from app.main import bp
@@ -19,17 +20,13 @@ def before_request():
 @login_required
 
 def index():
-  # Removing the block
-  # form = GigForm()
-  # if form.validate_on_submit():
-    # language = guess_language(form.gig.data)
-    # if language == 'UNKNOWN' or len(language) > 5:
-      # language = ''
-    # gig = Gig(detail=form.gig.data, employer=current_user, language=language)
-    # db.session.add(gig)
-    # db.session.commit()
-    # flash('Help is on the way! Your Gig is now live.')
-    # return redirect(url_for('main.index'))
+  form = SearchForm()
+  if form.validate_on_submit():
+      neighborhood_name = form.neighborhood_search.data.name
+      neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
+      neighborhood_id = neighborhood.id
+      return search_results(neighborhood_id, neighborhood_name)
+  return render_template('search.html', form=form)
   page = request.args.get('page', 1, type=int)
   gigs = current_user.favorite_gigs().paginate(
     page, current_app.config['GIGS_PER_PAGE'], False)
@@ -51,7 +48,6 @@ def create():
   form = GigForm()
   if form.validate_on_submit():
     neighborhood_name = form.neighborhood.data.name
-    print(neighborhood_name)
     neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
     neighborhood_id = neighborhood.id
     gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id)
@@ -130,3 +126,51 @@ def explore():
   prev_url = url_for('main.explore', page=gigs.prev_num) \
     if gigs.has_prev else None
   return render_template('index.html', title='Explore', gigs=gigs.items, next_url=next_url, prev_url=prev_url)
+
+@bp.route('/search', methods = ['GET', 'POST'])
+@login_required
+def search():
+    form = SearchForm()
+    if form.validate_on_submit():
+        neighborhood_name = form.neighborhood_search.data.name
+        neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
+        neighborhood_id = neighborhood.id
+        return search_results(neighborhood_id, neighborhood_name)
+    return render_template('search.html', form=form)
+
+@bp.route('/search_results')
+def search_results(neighborhood_id, neighborhood_name):
+    results = []
+    query = Gig.query
+    if neighborhood_id:
+        query = query.filter(Gig.neighborhood_id == neighborhood_id)
+
+    # Add more filter attributes here and then catch the error, use flash message if no filters are passed
+
+    results = query.all()
+    table = Results(results)
+    table.border = True
+    flash(_('The %(neighborhood_name)s Neighborhood has the following Gigs available:', neighborhood_name=neighborhood_name))
+    return render_template('search_results.html', table=table)
+
+
+# Below is a better search function that returns tuples of results from a join of the Neighborhood and Gig tables.
+# I think this is the best way to include Name instead of ID (or even in addition to it)
+# BUT I have been unable to use it with the Table class because it doesn't accept tuples inside of tuples -
+# it is looking for a simple tuple representing a database row it seems, not a join
+# so to get this to work I tried not using the table and just adding an HTML table in
+# the Jinja2 template "search_results.html" (see comments there for implementation detail)
+# the problem with that is I couldn't figure out what the join values are actually called in the template
+# so I cannot yet display the data : )
+
+# @bp.route('/search_results')
+# def search_results(neighborhood_id):
+#     results = []
+#     query = Gig.query
+#     if neighborhood_id:
+#         query = (db.session.query(Gig, Neighborhood).join(Neighborhood))
+#     results = query.all()
+#
+#     # table = Results(results)
+#     # table.border = True
+#     return render_template('search_results.html', results=results)
