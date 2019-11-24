@@ -23,6 +23,11 @@ def upgrade():
     sa.Column('name', sa.String(length=40), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('gigtype',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=40), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_index(op.f('ix_neighborhood_name'), 'neighborhood', ['name'], unique=True)
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -50,11 +55,15 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('language', sa.String(length=5), nullable=True),
     sa.Column('neighborhood_id', sa.Integer(), nullable=True),
+    sa.Column('start_date', sa.Date(), nullable=True),
+    sa.Column('type_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['neighborhood_id'], ['neighborhood.id'], ),
+    sa.ForeignKeyConstraint(['type_id'], ['gigtype.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_gig_timestamp'), 'gig', ['timestamp'], unique=False)
+
     # ### end Alembic commands ###
 
 

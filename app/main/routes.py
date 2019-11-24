@@ -154,7 +154,7 @@ def search_results(neighborhood_id, neighborhood_name):
     results = query.all()
     table = Results(results)
     table.border = True
-    flash(_(‘The %(neighborhood_name)s Neighborhood has the following Gigs available:’, neighborhood_name=neighborhood_name))
+    flash(_('The %(neighborhood_name)s Neighborhood has the following Gigs available:', neighborhood_name=neighborhood_name))
     return render_template('search_results.html', table=table)
 
 
