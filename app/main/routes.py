@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, request, url_for, current_app
 from flask_login import current_user, login_required
-from app.models import User, Gig, Neighborhood
+from app.models import User, Gig, Neighborhood, Gigtype
 from app import db
 from app.main.forms import EditProfileForm, GigForm, SearchForm
 from app.main.tables import Results
@@ -50,7 +50,10 @@ def create():
     neighborhood_name = form.neighborhood.data.name
     neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
     neighborhood_id = neighborhood.id
-    gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id)
+    type_name = form.type.data.name
+    type = Gigtype.query.filter_by(name=type_name).first()
+    type_id = type.id
+    gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id, type_id=type_id)
     db.session.add(gig)
     db.session.commit()
     flash('Help is on the way! Your Gig is now live.')
