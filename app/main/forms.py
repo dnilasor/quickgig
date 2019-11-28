@@ -29,5 +29,6 @@ class GigForm(FlaskForm):
   submit = SubmitField(_l('Submit'))
 
 class SearchForm(FlaskForm):
-  neighborhood_search = QuerySelectField(query_factory=lambda: Neighborhood.query.all(), get_label="name", allow_blank=False)
+  neighborhood_search = QuerySelectField(query_factory=lambda: Neighborhood.query.all(), get_label="name", allow_blank=True)
+  type_search = QuerySelectField(query_factory=lambda: Gigtype.query.all(), get_label="name", allow_blank=True)
   submit = SubmitField(_l('Submit'))
