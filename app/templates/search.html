@@ -13,6 +13,11 @@
             {% for error in form.neighborhood_search.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
+			{{form.type_search.label }}<br>
+            {{ form.type_search }}
+            {% for error in form.type_search.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
             </div>
             <p>{{ form.submit(class="btn btn-primary") }}</p>
         </form>
