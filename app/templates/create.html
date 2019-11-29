@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="container" align="center">
+  <div class="container" align="left">
   <h1>Hello, {{ current_user.username }}!</h1>
+  </div>
+  <div class="container" align="center">
   <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
@@ -16,6 +18,12 @@
 	  
 	  {{ form.neighborhood.label }}<br>
 	  {{ form.neighborhood }}
+      {% for error in form.gig.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+
+	  {{ form.type.label }}<br>
+	  {{ form.type }}
       {% for error in form.gig.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}

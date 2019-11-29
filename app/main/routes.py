@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, request, url_for, current_app
 from flask_login import current_user, login_required
-from app.models import User, Gig, Neighborhood
+from app.models import User, Gig, Neighborhood, Gigtype
 from app import db
 from app.main.forms import EditProfileForm, GigForm, SearchForm
 from app.main.tables import Results
@@ -22,10 +22,21 @@ def before_request():
 def index():
   form = SearchForm()
   if form.validate_on_submit():
-      neighborhood_name = form.neighborhood_search.data.name
-      neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
-      neighborhood_id = neighborhood.id
-      return search_results(neighborhood_id, neighborhood_name)
+      if form.neighborhood_search.data == None:
+          neighborhood_name = None
+          neighborhood_id = None
+      else:
+          neighborhood_name = form.neighborhood_search.data.name
+          neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
+          neighborhood_id = neighborhood.id
+      if form.type_search.data == None:
+          type_name = None
+          type_id = None
+      else:
+          type_name = form.type_search.data.name
+          type = Gigtype.query.filter_by(name=type_name).first()
+          type_id = type.id
+      return search_results(neighborhood_id, neighborhood_name, type_id, type_name)
   return render_template('search.html', form=form)
   page = request.args.get('page', 1, type=int)
   gigs = current_user.favorite_gigs().paginate(
@@ -50,7 +61,10 @@ def create():
     neighborhood_name = form.neighborhood.data.name
     neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
     neighborhood_id = neighborhood.id
-    gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id)
+    type_name = form.type.data.name
+    type = Gigtype.query.filter_by(name=type_name).first()
+    type_id = type.id
+    gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id, type_id=type_id)
     db.session.add(gig)
     db.session.commit()
     flash('Help is on the way! Your Gig is now live.')
@@ -139,12 +153,13 @@ def search():
     return render_template('search.html', form=form)
 
 @bp.route('/search_results')
-def search_results(neighborhood_id, neighborhood_name):
+def search_results(neighborhood_id, neighborhood_name, type_id, type_name):
     results = []
     query = Gig.query
-    if neighborhood_id:
-        query = query.filter(Gig.neighborhood_id == neighborhood_id)
-
+    if neighborhood_id and type_id:
+        query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.type_id == type_id)
+    elif neighborhood_id:  query = query.filter(Gig.neighborhood_id == neighborhood_id)
+    else:  query = query.filter(Gig.type_id == type_id)
     # Add more filter attributes here and then catch the error, use flash message if no filters are passed
 
     results = query.all()
