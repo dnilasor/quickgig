@@ -6,7 +6,7 @@
       <title>Welcome to QuickGig</title>
       {% endif %}
       
-        <!-- Required meta tags -->
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -64,6 +64,57 @@
 		{% endif %}
 		{% endwith %}		
         {% block content %}{% endblock %}
+    
+
+
+<!-- Footer -->
+<footer class="page-footer font-small teal pt-4 fixed-bottom">
+  <div style="background-color: #DCDCDC;">
+  <!-- Footer Text -->
+  <div class="container-fluid text-center text-md-center">
+
+    <!-- Grid row -->
+      <div class="row py-4 d-flex align-items-center">
+
+      <!-- Grid column -->
+      <div class="col-md-6 mt-md-0 mt-3">
+
+        <!-- Content -->
+        <h6 class="text-uppercase font-weight-bold">QuickGig</h6>
+        <p>Help</p>
+
+      </div>
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none pb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-6 mb-md-0 mb-3">
+
+        <!-- Content -->
+        <h6 class="text-uppercase font-weight-bold">Contact</h6>
+        <p>quickgig@gmail.com</p>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Text -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2019 Copyright:
+    <a href="{{ url_for('main.index') }}"> Quickgig.com</a>
+  </div>
+  <!-- Copyright -->
+  </div>
+  </div>
+
+</footer>
+<!-- Footer -->
+    
     
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
