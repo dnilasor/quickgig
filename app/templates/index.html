@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <div class="container" align="left">
   <h1>Hello, {{ current_user.username }}!</h1>
   {% if form %}
   <form action="" method="post">
@@ -14,6 +15,8 @@
       </p>
       <p>{{ form.submit() }}</p>
   </form>
+  </div>
+  
   {% endif %}
   {% for gig in gigs %}
     {% include '_gig.html' %}
@@ -24,4 +27,35 @@
   {% if next_url %}
   <a href="{{next_url }}">Older gigs</a>
   {% endif %}
+    
+   <div class="container" align="left">
+   <div class="list-group">
+   <a href="{{ url_for('main.index') }}" class="list-group-item list-group-item-action">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Daily Dog Walker</h5>
+      <small>2 days ago</small>
+    </div>
+    <p class="mb-1">Calling all animal lovers! Heaven Sent Pet Care, a professional dog walking company (serving Evanston, Wilmette, and Kenilworth) is currently looking for dynamic, caring, and trustworthy pet lovers to join our expanding team. If you love to spend time outdoors, are a self-starter, and are able to work independently and manage a changing schedule, this may be the job for you!
+</p>
+    <small>Dog Heaven, Lincoln Park</small>
+  </a>
+  <a href="{{ url_for('main.index') }}" class="list-group-item list-group-item-action">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Production Assistant</h5>
+      <small class="text-muted">4 days ago</small>
+    </div>
+    <p class="mb-1">Currently accepting applications for a part-time Production Assistant. This fast-paced position supports the production activities of Broadway In Chicago’s four venues. Ideal candidates would thrive working on solo projects as well as team-based work. Must be able to complete a wide variety of office tasks/projects using computer programs such as Microsoft Word, Excel, and Outlook. Candidates should be self-motivated, able to meet strict deadlines, and have the ability to multi-task. Top candidates will have a technical theatre background and familiarity with industry standard stage terminology.</p>
+    <small class="text-muted">Broadway in Chicago, Wicker Park</small>
+  </a>
+  <a href="{{ url_for('main.index') }}" class="list-group-item list-group-item-action">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Professional Tutor</h5>
+      <small class="text-muted">4 days ago</small>
+    </div>
+    <p class="mb-1">We have immediate openings for High School Math and Science Tutors! $22-25/hr.</p>
+    <small class="text-muted">Math for Dummies, Wicker Park</small>
+  </a>
+</div>
+</div>
+
 {% endblock %}
