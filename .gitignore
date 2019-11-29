@@ -125,4 +125,8 @@ celerybeat-schedule
 dmypy.json
 
 # Pyre type checker
+<<<<<<< HEAD
+.pyre/.DS_Store
+=======
 .pyre/
+>>>>>>> 6092009c0812a3e97db07d5ba1046429dab7c205
