@@ -12,8 +12,10 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
     </head>
-   
+
+
     <body>
        
         <div>
@@ -66,47 +68,20 @@
         {% block content %}{% endblock %}
     
 
-
 <!-- Footer -->
-<footer class="page-footer font-small teal pt-4 fixed-bottom">
+<footer class="page-footer font-small teal pt-4">
   <div style="background-color: #DCDCDC;">
   <!-- Footer Text -->
   <div class="container-fluid text-center text-md-center">
 
-    <!-- Grid row -->
-      <div class="row py-4 d-flex align-items-center">
-
-      <!-- Grid column -->
-      <div class="col-md-6 mt-md-0 mt-3">
-
-        <!-- Content -->
-        <h6 class="text-uppercase font-weight-bold">QuickGig</h6>
-        <p>Help</p>
-
-      </div>
-      <!-- Grid column -->
-
-      <hr class="clearfix w-100 d-md-none pb-3">
-
-      <!-- Grid column -->
-      <div class="col-md-6 mb-md-0 mb-3">
-
-        <!-- Content -->
-        <h6 class="text-uppercase font-weight-bold">Contact</h6>
-        <p>quickgig@gmail.com</p>
-
-      </div>
-      <!-- Grid column -->
-
-    </div>
-    <!-- Grid row -->
-
-  </div>
+  
   <!-- Footer Text -->
-
   <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">© 2019 Copyright:
-    <a href="{{ url_for('main.index') }}"> Quickgig.com</a>
+  <div class="footer-copyright text-center py-3"> Contact Support at <a href="{{ url_for('main.index') }}"> quickgig@gmail.com</a>
+
+  <br><small>© 2019 Copyright:
+    <a href="{{ url_for('main.index') }}"> Quickgig.com</a></small>
+  
   </div>
   <!-- Copyright -->
   </div>
@@ -114,7 +89,7 @@
 
 </footer>
 <!-- Footer -->
-    
+
     
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
