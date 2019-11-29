@@ -137,7 +137,6 @@ def detail(id):
     gig = Gig.query.get(id)
     return render_template('gig_detail.html', gig=gig)
 
-
 def search_results(params):
     page = request.args.get('page', 1, type=int)
     # paginate = paginate(page, current_app.config['GIGS_PER_PAGE'], False)
