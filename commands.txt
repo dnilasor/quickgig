@@ -1,5 +1,4 @@
-source venv/bin/activate
-export FLASK_APP = quickgig.py
+source venv/bin/activate; export FLASK_APP = quickgig.py
 
 
 docker run --name mysql -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes \

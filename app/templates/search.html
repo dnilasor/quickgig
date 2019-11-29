@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+  <h1>Search Gigs</h1>
+        {% if form %}
+        <form action="" method="post">
+          {{ form.hidden_tag() }}
+            <div class="form-group">
+            {{form.neighborhood_search.label }}<br>
+            {{ form.neighborhood_search }}
+            {% for error in form.neighborhood_search.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            </div>
+            <p>{{ form.submit(class="btn btn-primary") }}</p>
+        </form>
+        {% endif %}
+{% endblock %}
