@@ -155,18 +155,18 @@ def search():
 @bp.route('/search_results')
 def search_results(neighborhood_id, neighborhood_name, type_id, type_name):
     results = []
+    page = request.args.get('page', 1, type=int)
     query = Gig.query
+    # paginate = paginate(page, current_app.config['GIGS_PER_PAGE'], False)
     if neighborhood_id and type_id:
         query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.type_id == type_id)
     elif neighborhood_id:  query = query.filter(Gig.neighborhood_id == neighborhood_id)
     else:  query = query.filter(Gig.type_id == type_id)
     # Add more filter attributes here and then catch the error, use flash message if no filters are passed
-
-    results = query.all()
-    table = Results(results)
-    table.border = True
+    gigs = query.all()
+    print (gigs)
     flash(_('The %(neighborhood_name)s Neighborhood has the following Gigs available:', neighborhood_name=neighborhood_name))
-    return render_template('search_results.html', table=table)
+    return render_template('search_results.html', gigs=gigs)
 
 
 # Below is a better search function that returns tuples of results from a join of the Neighborhood and Gig tables.
@@ -183,7 +183,7 @@ def search_results(neighborhood_id, neighborhood_name, type_id, type_name):
 #     results = []
 #     query = Gig.query
 #     if neighborhood_id:
-#         query = (db.session.query(Gig, Neighborhood).join(Neighborhood))
+#         query = (db.session.query(Gig, Neighborhood, Gigtype).outerjoin(Neighborhood))
 #     results = query.all()
 #
 #     # table = Results(results)
