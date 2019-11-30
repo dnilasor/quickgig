@@ -65,8 +65,10 @@ def create():
     type_name = form.type.data.name
     type = Gigtype.query.filter_by(name=type_name).first()
     type_id = type.id
-    start_date = date
-    gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id, type_id=type_id, start_date=date)
+    start_date = form.date.data
+    print(start_date)
+    print(isinstance(start_date, str))
+    gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id, type_id=type_id, start_date=start_date)
     db.session.add(gig)
     db.session.commit()
     flash('Help is on the way! Your Gig is now live.')
@@ -170,7 +172,7 @@ def search_results(neighborhood_id, neighborhood_name, type_id, type_name, start
     elif type_id:  query = query.filter(Gig.type_id == type_id)
     elif start_date:  query = query.filter(Gig.start_date >= start_date)
     else:  query = query.filter(1 == 1)
-    
+
 
     results = query.all()
     table = Results(results)
