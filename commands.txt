@@ -13,9 +13,3 @@ docker run --name quickgig -d -p 8000:5000 --rm -e SECRET_KEY=you-will-never-gue
     quickgig:latest
 
 docker run -ti quickgig:latest
-
-
-
-# rando code Below
-
-start_date = db.column(db.Date)

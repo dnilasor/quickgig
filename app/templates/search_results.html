@@ -4,7 +4,9 @@
 
 <title>Search Results - QuickGig</title>
 
-{{ table }}
+{% for gig in gigs %}
+  {% include '_gig.html' %}
+{% endfor %}
 <!--
 
   <table>

@@ -158,10 +158,8 @@ def search():
 
 @bp.route('/search_results')
 def search_results(neighborhood_id, neighborhood_name, type_id, type_name, start_date):
-    results = []
-    flash(_('The %(neighborhood_id)s is available:', neighborhood_id=neighborhood_id))
-    flash(_('The %(type_id)s is available:', type_id=type_id))
-    flash(_('The %(start_date)s is available:', start_date=start_date))
+    page = request.args.get('page', 1, type=int)
+    # paginate = paginate(page, current_app.config['GIGS_PER_PAGE'], False)
     query = Gig.query
     if neighborhood_id and type_id and start_date:
         query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.type_id == type_id and Gig.start_date >= start_date)
@@ -172,32 +170,6 @@ def search_results(neighborhood_id, neighborhood_name, type_id, type_name, start
     elif type_id:  query = query.filter(Gig.type_id == type_id)
     elif start_date:  query = query.filter(Gig.start_date >= start_date)
     else:  query = query.filter(1 == 1)
-
-
-    results = query.all()
-    table = Results(results)
-    table.border = True
+    gigs = query.all()
     flash(_('The %(neighborhood_name)s Neighborhood has the following Gigs available:', neighborhood_name=neighborhood_name))
-    return render_template('search_results.html', table=table)
-
-
-# Below is a better search function that returns tuples of results from a join of the Neighborhood and Gig tables.
-# I think this is the best way to include Name instead of ID (or even in addition to it)
-# BUT I have been unable to use it with the Table class because it doesn't accept tuples inside of tuples -
-# it is looking for a simple tuple representing a database row it seems, not a join
-# so to get this to work I tried not using the table and just adding an HTML table in
-# the Jinja2 template "search_results.html" (see comments there for implementation detail)
-# the problem with that is I couldn't figure out what the join values are actually called in the template
-# so I cannot yet display the data : )
-
-# @bp.route('/search_results')
-# def search_results(neighborhood_id):
-#     results = []
-#     query = Gig.query
-#     if neighborhood_id:
-#         query = (db.session.query(Gig, Neighborhood).join(Neighborhood))
-#     results = query.all()
-#
-#     # table = Results(results)
-#     # table.border = True
-#     return render_template('search_results.html', results=results)
+    return render_template('search_results.html', gigs=gigs)
