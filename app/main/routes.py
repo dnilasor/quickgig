@@ -36,7 +36,8 @@ def index():
           type_name = form.type_search.data.name
           type = Gigtype.query.filter_by(name=type_name).first()
           type_id = type.id
-      return search_results(neighborhood_id, neighborhood_name, type_id, type_name)
+      start_date = '2019-11-29'
+      return search_results(neighborhood_id, neighborhood_name, type_id, type_name, start_date)
   return render_template('search.html', form=form)
   page = request.args.get('page', 1, type=int)
   gigs = current_user.favorite_gigs().paginate(
@@ -64,7 +65,10 @@ def create():
     type_name = form.type.data.name
     type = Gigtype.query.filter_by(name=type_name).first()
     type_id = type.id
-    gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id, type_id=type_id)
+    start_date = form.date.data
+    print(start_date)
+    print(isinstance(start_date, str))
+    gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id, type_id=type_id, start_date=start_date)
     db.session.add(gig)
     db.session.commit()
     flash('Help is on the way! Your Gig is now live.')
@@ -153,14 +157,22 @@ def search():
     return render_template('search.html', form=form)
 
 @bp.route('/search_results')
-def search_results(neighborhood_id, neighborhood_name, type_id, type_name):
+def search_results(neighborhood_id, neighborhood_name, type_id, type_name, start_date):
     results = []
+    flash(_('The %(neighborhood_id)s is available:', neighborhood_id=neighborhood_id))
+    flash(_('The %(type_id)s is available:', type_id=type_id))
+    flash(_('The %(start_date)s is available:', start_date=start_date))
     query = Gig.query
-    if neighborhood_id and type_id:
-        query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.type_id == type_id)
+    if neighborhood_id and type_id and start_date:
+        query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.type_id == type_id and Gig.start_date >= start_date)
+    elif neighborhood_id and start_date:  query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.start_date >= start_date)
+    elif type_id and start_date:  query = query.filter(Gig.type_id == type_id and Gig.start_date >= start_date)
+    elif type_id and neighborhood_id:  query = query.filter(Gig.type_id == type_id and Gig.neighborhood_id == neighborhood_id)
     elif neighborhood_id:  query = query.filter(Gig.neighborhood_id == neighborhood_id)
-    else:  query = query.filter(Gig.type_id == type_id)
-    # Add more filter attributes here and then catch the error, use flash message if no filters are passed
+    elif type_id:  query = query.filter(Gig.type_id == type_id)
+    elif start_date:  query = query.filter(Gig.start_date >= start_date)
+    else:  query = query.filter(1 == 1)
+
 
     results = query.all()
     table = Results(results)
