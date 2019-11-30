@@ -79,16 +79,21 @@ class User(UserMixin, db.Model):
 def load_user(id):
   return User.query.get(int(id))
 
+
+
 class Gig(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  detail = db.Column(db.String(140))
+  detail = db.Column(db.String(4000))
   timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
   language = db.Column(db.String(5))
   neighborhood_id = db.Column(db.Integer, db.ForeignKey('neighborhood.id'))
+  neighborhood_name = db.relationship('Neighborhood', lazy='joined', uselist=False)
   start_date = db.Column(db.Date)
   type_id = db.Column(db.Integer, db.ForeignKey('gigtype.id'))
-  
+  type_name = db.relationship('Gigtype', lazy='joined', uselist=False)
+  employer_email = db.relationship('User', lazy=True, uselist=False)
+
   def __repr__(self):
     return '<Gig {}>'.format(self.detail)
 
@@ -98,9 +103,13 @@ class Neighborhood(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(40), index=True, unique=True)
 
+  def __repr__(self):
+    return self.name
+
 class Gigtype(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(40), index=True, unique=True)
 
   def __repr__(self):
     return self.name
+>>>>>>> 7f217160385b04960044377ea25ef61734ec1b73

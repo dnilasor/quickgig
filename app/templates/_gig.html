@@ -3,13 +3,15 @@
 
 <div class="container" align="left">
    <div class="list-group">
-       <a href="{{ url_for('main.index') }}" class="list-group-item list-group-item-action">
+       <a href="{{ url_for('main.detail', id=gig.id) }}" class="list-group-item list-group-item-action">
            <div class="d-flex w-100 justify-content-between">
            <h5 class="mb-1">{{ gig.employer.username }} needs help with:<br></h5>
            <small>Start Date: {{  gig.start_date }}</small>
+           <small>Gig Type: {{  gig.type_name }}</small>
    </div>
    {{ gig.detail }}
-    <p><small>{{ gig.employer.username }}, {{ gig.neighborhood_id }}</small></p>
+
+    <p><small>{{ gig.employer.username }}, {{ gig.employer.email }} {{ gig.neighborhood_name }}</small></p>
   </a>
   </div>
   </div>
