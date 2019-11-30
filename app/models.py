@@ -79,6 +79,8 @@ class User(UserMixin, db.Model):
 def load_user(id):
   return User.query.get(int(id))
 
+
+
 class Gig(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   detail = db.Column(db.String(4000))
@@ -86,10 +88,11 @@ class Gig(db.Model):
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
   language = db.Column(db.String(5))
   neighborhood_id = db.Column(db.Integer, db.ForeignKey('neighborhood.id'))
-  hood_name = db.relationship('Neighborhood', backref='gig', lazy='joined', uselist=False)
+  neighborhood_name = db.relationship('Neighborhood', lazy='joined', uselist=False)
   start_date = db.Column(db.Date)
   type_id = db.Column(db.Integer, db.ForeignKey('gigtype.id'))
-  type_name = db.relationship('Gigtype', backref='gig', lazy='joined', uselist=False)
+  type_name = db.relationship('Gigtype', lazy='joined', uselist=False)
+  employer_email = db.relationship('User', lazy=True, uselist=False)
 
   def __repr__(self):
     return '<Gig {}>'.format(self.detail)
@@ -99,6 +102,9 @@ class Gig(db.Model):
 class Neighborhood(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(40), index=True, unique=True)
+
+  def __repr__(self):
+    return self.name
 
 class Gigtype(db.Model):
   id = db.Column(db.Integer, primary_key=True)
