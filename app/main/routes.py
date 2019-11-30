@@ -156,7 +156,11 @@ def search():
         return search_results(neighborhood_id, neighborhood_name)
     return render_template('search.html', form=form)
 
-@bp.route('/search_results')
+@bp.route('/<id>_detail/')
+def detail(id):
+    gig = Gig.query.get(id)
+    return render_template('gig_detail.html', gig=gig)
+
 def search_results(neighborhood_id, neighborhood_name, type_id, type_name, start_date):
     page = request.args.get('page', 1, type=int)
     # paginate = paginate(page, current_app.config['GIGS_PER_PAGE'], False)
@@ -173,3 +177,4 @@ def search_results(neighborhood_id, neighborhood_name, type_id, type_name, start
     gigs = query.all()
     flash(_('The %(neighborhood_name)s Neighborhood has the following Gigs available:', neighborhood_name=neighborhood_name))
     return render_template('search_results.html', gigs=gigs)
+
