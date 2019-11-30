@@ -1,6 +1,3 @@
-
-
-
 <div class="container" align="left">
    <div class="list-group">
        <a href="{{ url_for('main.detail', id=gig.id) }}" class="list-group-item list-group-item-action">
@@ -15,18 +12,3 @@
   </a>
   </div>
   </div>
-
-
-<!-- <table class="table table-hover">
-        <tr>
-            <td width="70px">
-                <a href="{{ url_for('main.user', username=gig.employer.username) }}">
-                    <img src="{{ gig.employer.avatar(70) }}" />
-                </a>
-            </td>
-            <td>
-                {% set user_link %}
-                    <a href="{{ url_for('main.user', username=gig.employer.username) }}">
-                        {{ gig.employer.username }}
-                    </a>
-                {% endset %} -->
