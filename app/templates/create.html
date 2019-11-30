@@ -27,7 +27,13 @@
       {% for error in form.gig.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
-	  
+ 
+	  {{ form.date.label }}<br>
+	  {{ form.date }}
+      {% for error in form.gig.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+ 
 	  </p>
       <p>{{ form.submit(class="btn btn-primary") }}</p>
   </form>
