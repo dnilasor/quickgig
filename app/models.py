@@ -201,11 +201,11 @@ class Gig(db.Model):
   timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
   language = db.Column(db.String(5))
-  neighborhood_id = db.Column(db.Integer, db.ForeignKey('neighborhood.id'))
-  hood_name = db.relationship('Neighborhood', backref='gig', lazy='joined', uselist=False)
+  hood_id = db.Column(db.Integer, db.ForeignKey('neighborhood.id'))
+  hood_name = db.relationship('Neighborhood', lazy='joined', uselist=False)
   start_date = db.Column(db.Date)
   type_id = db.Column(db.Integer, db.ForeignKey('gigtype.id'))
-  type_name = db.relationship('Gigtype', backref='gig', lazy='joined', uselist=False)
+  type_name = db.relationship('Gigtype', lazy='joined', uselist=False)
 
   def __repr__(self):
     return '<Gig {}>'.format(self.detail)
