@@ -8,11 +8,12 @@
            <h5 class="mb-1">{{ gig.employer.username }} needs help with:<br></h5>
            <small>Start Date: {{  gig.start_date }}</small>
            <small>Gig Type: {{  gig.type_name }}</small>
+           <small>Employer Name: {{  gig.employer_first_name }} {{  gig.employer_last_name }}</small>
+
    </div>
    {{ gig.detail }}
-    <p><small>{{ gig.employer.username }}, {{ gig.hood_name }}</small></p>
+    <p><small>{{ gig.employer.username }}, {{ gig.neighborhood_name }}</small></p>
   </a>
   </div>
   </div>
-
 {% endblock %}
