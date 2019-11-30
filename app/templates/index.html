@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "base.html" %}
 
 {% block content %}
@@ -29,4 +30,36 @@
   {% endif %}
 
 
+=======
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container" align="left">
+  <h1>Hello, {{ current_user.username }}!</h1>
+  {% if form %}
+  <form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+      {{form.gig.label }}<br>
+      {{ form.gig(cols=32, rows=8) }}<br>
+      {% for error in form.gig.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+      </p>
+      <p>{{ form.submit() }}</p>
+  </form>
+  </div>
+  
+  {% endif %}
+  {% for gig in gigs %}
+    {% include '_gig.html' %}
+  {% endfor %}
+  {% if prev_url %}
+  <a href="{{ prev_url }}">Newer gigs</a>
+  {% endif %}
+  {% if next_url %}
+  <a href="{{next_url }}">Older gigs</a>
+  {% endif %}
+
+>>>>>>> 7f217160385b04960044377ea25ef61734ec1b73
 {% endblock %}
