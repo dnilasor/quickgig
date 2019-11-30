@@ -164,9 +164,13 @@ def search_results(neighborhood_id, neighborhood_name, type_id, type_name):
     else:  query = query.filter(Gig.type_id == type_id)
     # Add more filter attributes here and then catch the error, use flash message if no filters are passed
     gigs = query.all()
-    print (gigs)
     flash(_('The %(neighborhood_name)s Neighborhood has the following Gigs available:', neighborhood_name=neighborhood_name))
     return render_template('search_results.html', gigs=gigs)
+
+@bp.route('/<id>_detail/')
+def detail(id):
+    gig = Gig.query.get(id)
+    return render_template('gig_detail.html', gig=gig)
 
 
 # Below is a better search function that returns tuples of results from a join of the Neighborhood and Gig tables.
