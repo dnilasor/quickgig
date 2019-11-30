@@ -9,20 +9,20 @@ class LoginForm(FlaskForm):
   password = PasswordField('Password', validators=[DataRequired()])
   remember_me = BooleanField('Remember Me')
   submit = SubmitField('Login')
-  
+
 class SignupForm(FlaskForm):
   username = StringField('Username', validators=[DataRequired()])
   email = StringField('Email', validators=[DataRequired(), Email()])
   password = PasswordField('Password', validators=[DataRequired()])
-  password2 = PasswordField( 
+  password2 = PasswordField(
     'Re-type Password', validators=[DataRequired(), EqualTo('password')])
   submit = SubmitField('Register')
-   
+
   def validate_username(self, username):
     user = User.query.filter_by(username=username.data).first()
     if user is not None:
       raise ValidationError('Please use a different username.')
-	   
+
   def validate_email(self, email):
     user = User.query.filter_by(email=email.data).first()
     if user is not None:
@@ -32,7 +32,7 @@ class EditProfileForm(FlaskForm):
   username = StringField('Username', validators=[DataRequired()])
   about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
   submit = SubmitField('Submit')
-  
+
   def __init__(self, original_username, *args, **kwargs):
     super(EditProfileForm, self).__init__(*args, **kwargs)
     self.original_username = original_username
@@ -43,13 +43,13 @@ class EditProfileForm(FlaskForm):
       if user is not None:
         raise ValidationError('Please use a different username.')
 class GigForm(FlaskForm):
-  gig = TextAreaField('Describe your gig here', validators=[DataRequired(), Length(min=1, max=300)])
+  gig = TextAreaField('Describe your gig here', validators=[DataRequired(), Length(min=1, max=4000)])
   submit = SubmitField('Submit')
-  
+
 class PasswordResetRequestForm(FlaskForm):
   email = StringField('Email', validators=[DataRequired()])
   submit = SubmitField('Request Password Reset')
-  
+
 class PasswordResetForm(FlaskForm):
   password = PasswordField('Password', validators=[DataRequired()])
   password2 = PasswordField(
