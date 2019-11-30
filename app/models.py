@@ -112,4 +112,3 @@ class Gigtype(db.Model):
 
   def __repr__(self):
     return self.name
->>>>>>> 7f217160385b04960044377ea25ef61734ec1b73
