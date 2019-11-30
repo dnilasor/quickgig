@@ -86,13 +86,10 @@ class Gig(db.Model):
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
   language = db.Column(db.String(5))
   neighborhood_id = db.Column(db.Integer, db.ForeignKey('neighborhood.id'))
-  neighborhood_name = db.relationship('Neighborhood', backref='gig', lazy='joined', uselist=False)
+  hood_name = db.relationship('Neighborhood', backref='gig', lazy='joined', uselist=False)
   start_date = db.Column(db.Date)
   type_id = db.Column(db.Integer, db.ForeignKey('gigtype.id'))
   type_name = db.relationship('Gigtype', backref='gig', lazy='joined', uselist=False)
-
-  def gig_neighborhood(self):
-      neighborhood = Gig.query(Neighborhood).join(Gig.neighborhood_id == Neighborhood.id)
 
   def __repr__(self):
     return '<Gig {}>'.format(self.detail)
