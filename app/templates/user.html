@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <div class="container" align="left">
 
   <table>
     <tr valign="top">
@@ -20,6 +21,7 @@
       </td>
     </tr>
   </table>
+  </div>
   <hr>
   {% for gig in gigs %}
     {% include '_gig.html' %}
