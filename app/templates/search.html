@@ -2,18 +2,18 @@
 
 {% block content %}
 
-<div>
+  <div class="container" align="left">
   <h1>Search Gigs</h1>
         {% if form %}
         <form action="" method="post">
           {{ form.hidden_tag() }}
             <div class="form-group">
-            {{form.neighborhood_search.label }}<br>
+            {{form.neighborhood_search.label }}
             {{ form.neighborhood_search }}
             {% for error in form.neighborhood_search.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-			{{form.type_search.label }}<br>
+            {% endfor %}<br>
+			{{form.type_search.label }}
             {{ form.type_search }}
             {% for error in form.type_search.errors %}
             <span style="color: red;">[{{ error }}]</span>
@@ -22,4 +22,5 @@
             <p>{{ form.submit(class="btn btn-primary") }}</p>
         </form>
         {% endif %}
+        </div>
 {% endblock %}
