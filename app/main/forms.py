@@ -34,5 +34,5 @@ class GigForm(FlaskForm):
 class SearchForm(FlaskForm):
   neighborhood_search = QuerySelectField(query_factory=lambda: Neighborhood.query.all(), get_label="name", allow_blank=True)
   type_search = QuerySelectField(query_factory=lambda: Gigtype.query.all(), get_label="name", allow_blank=True)
-  date_search = DateField('Start Date, please enter 01/01/9999 to search all dates', format='%Y-%m-%d')
+  date_search = DateField('Start Date, value is required for all searches', format='%Y-%m-%d')
   submit = SubmitField(_l('Submit'))
