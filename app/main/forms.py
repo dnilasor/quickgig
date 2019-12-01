@@ -28,13 +28,11 @@ class GigForm(FlaskForm):
   gig = TextAreaField(_l('Describe your gig here'), validators=[DataRequired(), Length(min=1, max=4000)])
   neighborhood = QuerySelectField(query_factory=lambda: Neighborhood.query.all(), get_label="name", allow_blank=False)
   type = QuerySelectField(query_factory=lambda: Gigtype.query.all(), get_label="name", allow_blank=False)
-  date = DateField('DatePicker', format='%Y-%m-%d')
+  date = DateField('Start Date', format='%Y-%m-%d')
   submit = SubmitField(_l('Submit'))
 
 class SearchForm(FlaskForm):
   neighborhood_search = QuerySelectField(query_factory=lambda: Neighborhood.query.all(), get_label="name", allow_blank=True)
   type_search = QuerySelectField(query_factory=lambda: Gigtype.query.all(), get_label="name", allow_blank=True)
-  #date_entry = input('Enter a date (i.e. 2017,7,1)')
-  #year, month, day = map(int, date_entry.split(','))
-  #date_search = datetime(year, month, day)
+  date_search = DateField('Start Date, value is required for all searches', format='%Y-%m-%d')
   submit = SubmitField(_l('Submit'))
