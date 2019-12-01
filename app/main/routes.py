@@ -36,7 +36,7 @@ def index():
           type_name = form.type_search.data.name
           type = Gigtype.query.filter_by(name=type_name).first()
           type_id = type.id
-      start_date = '2019-11-29'
+      start_date = form.date_search.data
       return search_results(neighborhood_id, neighborhood_name, type_id, type_name, start_date)
   return render_template('search.html', form=form)
   page = request.args.get('page', 1, type=int)
@@ -66,8 +66,6 @@ def create():
     type = Gigtype.query.filter_by(name=type_name).first()
     type_id = type.id
     start_date = form.date.data
-    print(start_date)
-    print(isinstance(start_date, str))
     gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id, type_id=type_id, start_date=start_date)
     db.session.add(gig)
     db.session.commit()
@@ -167,14 +165,28 @@ def search_results(neighborhood_id, neighborhood_name, type_id, type_name, start
     query = Gig.query
     if neighborhood_id and type_id and start_date:
         query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.type_id == type_id and Gig.start_date >= start_date)
-    elif neighborhood_id and start_date:  query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.start_date >= start_date)
-    elif type_id and start_date:  query = query.filter(Gig.type_id == type_id and Gig.start_date >= start_date)
-    elif type_id and neighborhood_id:  query = query.filter(Gig.type_id == type_id and Gig.neighborhood_id == neighborhood_id)
-    elif neighborhood_id:  query = query.filter(Gig.neighborhood_id == neighborhood_id)
-    elif type_id:  query = query.filter(Gig.type_id == type_id)
-    elif start_date:  query = query.filter(Gig.start_date >= start_date)
-    else:  query = query.filter(1 == 1)
+        flash(_('The %(neighborhood_name)s Neighborhood and Gig Type %(type_name)s with a Starting Date on or after %(start_date)s has the following Gigs available:', neighborhood_name=neighborhood_name, type_name=type_name, start_date=start_date))
+    elif neighborhood_id and start_date:  
+        query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.start_date >= start_date)
+        flash(_('The %(neighborhood_name)s Neighborhood with a Starting Date on or after %(start_date)s has the following Gigs available:', neighborhood_name=neighborhood_name, start_date=start_date))
+    elif type_id and start_date:  
+        query = query.filter(Gig.type_id == type_id and Gig.start_date >= start_date)
+        flash(_('The %(type_name)s Gig Type with a Starting Date on or after %(start_date)s has the following Gigs available:', type_name=type_name, start_date=start_date))
+    elif type_id and neighborhood_id:  
+        query = query.filter(Gig.type_id == type_id and Gig.neighborhood_id == neighborhood_id)
+        flash(_('The %(neighborhood_name)s Neighborhood and %(type_name)s Gig Type has the following Gigs available:', neighborhood_name=neighborhood_name, type_name=type_name))
+    elif neighborhood_id:  
+        query = query.filter(Gig.neighborhood_id == neighborhood_id)
+        flash(_('The %(neighborhood_name)s Neighborhood has the following Gigs available:', neighborhood_name=neighborhood_name))
+    elif type_id:  
+        query = query.filter(Gig.type_id == type_id)
+        flash(_('The %(type_name)s Gig Type has the following Gigs available:', type_name=type_name))
+    elif start_date:  
+        query = query.filter(Gig.start_date >= start_date)
+        flash(_('The following Gigs with a Start Date on or after %(start_date)s are available:', start_date=start_date))
+    else:  
+        query = query.filter(1 == 1)
+        flash(_('The following Gigs are available:'))
     gigs = query.all()
-    flash(_('The %(neighborhood_name)s Neighborhood has the following Gigs available:', neighborhood_name=neighborhood_name))
     return render_template('search_results.html', gigs=gigs)
 
