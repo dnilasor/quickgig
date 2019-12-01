@@ -6,8 +6,7 @@
        <a href="{{ url_for('main.detail', id=gig.id) }}" class="list-group-item list-group-item-action">
            <div class="d-flex w-100 justify-content-between">
            <h5 class="mb-1">{{ gig.employer.username }} needs help with:<br></h5>
-           <small>Start Date: {{  gig.start_date }}</small>
-           <small>Gig Type: {{  gig.type_name }}</small>
+         
            </div>
    <p>{{ gig.hood_name }}</p>
    {{ gig.detail }}<br></p>
@@ -15,8 +14,7 @@
    Gig Type: {{  gig.type_name }}<br>
    Neighborhood: {{ gig.neighborhood_name }}<br>
 </a><br>
-   Email {{ gig.employer.username }} and apply for this gig at <a href = "mailto: {{ gig.employer.email }}">{{ gig.employer.email }}</a>
-
+   <h5 align="center">To apply for this gig, email {{ gig.employer.username }} at <a href = "mailto: {{ gig.employer.email }}">{{ gig.employer.email }}</a></h5>
  </div>
 </div>
 
