@@ -2,20 +2,21 @@
 
 {% block content %}
   <div class="container" align="left">
-  <h1>Hello, {{ current_user.username }}!</h1>
+  <h1>Hello, {{ current_user.username }}!</h1><br>
   </div>
-  <div class="container" align="center">
+  <div class="container" align="left">
   <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
       <div class="form-group">
-      {{ form.gig.label(for="exampleTextarea") }}<br>
+      <h4>{{ form.gig.label(for="exampleTextarea") }}:</h4>
+      Capture the reader’s attention. Tell applicants who you are and what you do. Inform applicants on what they can expect from your gig. Let applicants know what kind of information they must provide and invite applicants to apply to the gig.<br>
+      <br>
       {{ form.gig(cols=32, rows=8, class="form-control") }}<br>
       {% for error in form.gig.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
 	  </div>
-
 	  {{ form.neighborhood.label }}
 	  {{ form.neighborhood }}
       {% for error in form.gig.errors %}
