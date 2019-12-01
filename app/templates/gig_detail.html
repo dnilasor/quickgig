@@ -8,11 +8,17 @@
            <h5 class="mb-1">{{ gig.employer.username }} needs help with:<br></h5>
            <small>Start Date: {{  gig.start_date }}</small>
            <small>Gig Type: {{  gig.type_name }}</small>
-   </div>
-   {{ gig.detail }}
-    <p><small>{{ gig.employer.username }}, {{ gig.hood_name }}</small></p>
-  </a>
-  </div>
-  </div>
+           </div>
+   <p>{{ gig.hood_name }}</p>
+   {{ gig.detail }}<br></p>
+   Start Date: {{  gig.start_date }}<br>
+   Gig Type: {{  gig.type_name }}<br>
+   Neighborhood: {{ gig.neighborhood_name }}<br>
+</a><br>
+   Email {{ gig.employer.username }} and apply for this gig at <a href = "mailto: {{ gig.employer.email }}">{{ gig.employer.email }}</a>
+
+ </div>
+</div>
+
 
 {% endblock %}
