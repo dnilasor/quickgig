@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "base.html" %}
 
 {% block content %}
@@ -27,3 +28,47 @@
   </form>
   </div>
 {% endblock %}
+=======
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container" align="left">
+  <h1>Hello, {{ current_user.username }}!</h1>
+  </div>
+  <div class="container" align="center">
+  <form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+      <div class="form-group">
+      {{ form.gig.label(for="exampleTextarea") }}<br>
+      {{ form.gig(cols=32, rows=8, class="form-control") }}<br>
+      {% for error in form.gig.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+	  </div>
+
+	  {{ form.neighborhood.label }}<br>
+	  {{ form.neighborhood }}
+      {% for error in form.gig.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+
+	  {{ form.type.label }}<br>
+	  {{ form.type }}
+      {% for error in form.gig.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+
+	  {{ form.date.label }}<br>
+	  {{ form.date(class_='datepicker') }}
+    {{ form.hidden_tag() }}
+      {% for error in form.gig.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+
+	  </p>
+      <p>{{ form.submit(class="btn btn-primary") }}</p>
+  </form>
+  </div>
+{% endblock %}
+>>>>>>> 1217885a2daa337dfd9b82dc5be412be77978bef
