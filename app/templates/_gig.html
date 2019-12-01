@@ -1,26 +1,16 @@
+<div class="container" align="left">
+   <div class="list-group">
+       <a href="{{ url_for('main.detail', id=gig.id) }}" class="list-group-item list-group-item-action">
+           <div class="d-flex w-100 justify-content-between">
+           <small>Start Date: {{  gig.start_date }}</small>
+           <small>Gig Type: {{  gig.type_name }}</small>
+   </div><br>
+   <h5 class="mb-1">{{ gig.employer.username }} is hiring:<br></h5>
 
-<table>
-  <tr valign="top">
-    <td><img src="{{ gig.employer.avatar(36) }}"></td>
-	<td>
-	  <a href="{{ url_for('main.user', username=gig.employer.username) }}">
-	  </a>
-	<td>{{ gig.employer.username }} needs help with:<br>{{ gig.detail }}
-	</td>
-  </tr>
-</table>
+   {{ gig.detail }}<br>
+   <br>
+   <p>{{ gig.neighborhood_name }}</p>
 
-
-<!-- <table class="table table-hover">
-        <tr>
-            <td width="70px">
-                <a href="{{ url_for('main.user', username=gig.employer.username) }}">
-                    <img src="{{ gig.employer.avatar(70) }}" />
-                </a>
-            </td>
-            <td>
-                {% set user_link %}
-                    <a href="{{ url_for('main.user', username=gig.employer.username) }}">
-                        {{ gig.employer.username }}
-                    </a>
-                {% endset %} -->
+  </a>
+  </div>
+  </div>
