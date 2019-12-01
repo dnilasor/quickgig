@@ -16,19 +16,19 @@
       {% endfor %}
 	  </div>
 
-	  {{ form.neighborhood.label }}<br>
+	  {{ form.neighborhood.label }}
 	  {{ form.neighborhood }}
       {% for error in form.gig.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
-
-	  {{ form.type.label }}<br>
+<br>
+	  {{ form.type.label }}
 	  {{ form.type }}
       {% for error in form.gig.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
-
-	  {{ form.date.label }}<br>
+<br>
+	  {{ form.date.label }}
 	  {{ form.date(class_='datepicker') }}
     {{ form.hidden_tag() }}
       {% for error in form.gig.errors %}
