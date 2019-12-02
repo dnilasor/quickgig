@@ -30,15 +30,14 @@ def index():
           neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
           neighborhood_id = neighborhood.id
           filters.append(neighborhood_id)
-      elif type_name != '':
+      if type_name != '':
           type = Gigtype.query.filter_by(name=type_name).first()
           type_id = type.id
           filters.append(type_id)
-      elif start_date:
+      if start_date:
           filters.append(start_date)
       else:
           return redirect(url_for('main.explore'))
-      print(filters)
       return search_results(filters)
   return render_template('search.html', form=form)
   page = request.args.get('page', 1, type=int)
