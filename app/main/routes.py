@@ -30,7 +30,7 @@ def index():
           params.append(form.neighborhood_search.data)
           params.append(form.type_search.data)
           params.append(form.date_search.data)
-          
+
       return search_results(params)
   return render_template('search.html', form=form)
   page = request.args.get('page', 1, type=int)
@@ -131,21 +131,12 @@ def explore():
     if gigs.has_prev else None
   return render_template('index.html', title='Explore', gigs=gigs.items, next_url=next_url, prev_url=prev_url)
 
-@bp.route('/search', methods = ['GET', 'POST'])
-@login_required
-def search():
-    form = SearchForm()
-    if form.validate_on_submit():
-        neighborhood_name = form.neighborhood_search.data.name
-        neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
-        neighborhood_id = neighborhood.id
-        return search_results(neighborhood_id, neighborhood_name)
-    return render_template('search.html', form=form)
-
 @bp.route('/<id>_detail/')
+@login_required
 def detail(id):
     gig = Gig.query.get(id)
     return render_template('gig_detail.html', gig=gig)
+
 
 def search_results(params):
     page = request.args.get('page', 1, type=int)
