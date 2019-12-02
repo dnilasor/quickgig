@@ -100,7 +100,7 @@ class Gig(db.Model):
   type_name = db.relationship('Gigtype', lazy='joined', uselist=False)
   employer_email = db.relationship('User', lazy=True, uselist=False)
   employer_first_name = db.relationship('User', lazy=True, uselist=False)
-  employer_last_name - db.relationship('User', lazy=True, uselist=False)
+  employer_last_name = db.relationship('User', lazy=True, uselist=False)
 
   def __repr__(self):
     return '<Gig {}>'.format(self.detail)
