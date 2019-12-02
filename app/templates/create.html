@@ -31,7 +31,7 @@
       {% endfor %}
 <br>
 	  {{ form.date.label }}
-	  {{ form.date(class_='datepicker', class="btn btn-light btn-secondary btn-sm dropdown-toggle") }}
+	  {{ form.date(class_='datepicker', class="btn btn-light btn-secondary btn-sm") }}
     {{ form.hidden_tag() }}
       {% for error in form.gig.errors %}
       <span style="color: red;">[{{ error }}]</span>
