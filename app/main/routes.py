@@ -183,37 +183,6 @@ def search_results(params):
         filters.append(Gig.start_date >= start_date)
 
     query = query.filter(and_(*filters))
-    #
-    #
-    # if not None in filters:
-    #
-    #     query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.type_id == type_id and Gig.start_date >= start_date)
-    #     flash(_('These gigs match your search:', neighborhood_name=neighborhood_name, type_name=type_name, start_date=start_date))
-    #
-    #
-    # if neighborhood_id and type_id and start_date:
-    #     query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.type_id == type_id and Gig.start_date >= start_date)
-    #     flash(_('The %(neighborhood_name)s Neighborhood and Gig Type %(type_name)s with a Starting Date on or after %(start_date)s has the following Gigs available:', neighborhood_name=neighborhood_name, type_name=type_name, start_date=start_date))
-    # elif neighborhood_id and start_date:
-    #     query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.start_date >= start_date)
-    #     flash(_('The %(neighborhood_name)s Neighborhood with a Starting Date on or after %(start_date)s has the following Gigs available:', neighborhood_name=neighborhood_name, start_date=start_date))
-    # elif type_id and start_date:
-    #     query = query.filter(Gig.type_id == type_id and Gig.start_date >= start_date)
-    #     flash(_('The %(type_name)s Gig Type with a Starting Date on or after %(start_date)s has the following Gigs available:', type_name=type_name, start_date=start_date))
-    # elif type_id and neighborhood_id:
-    #     query = query.filter(Gig.type_id == type_id and Gig.neighborhood_id == neighborhood_id)
-    #     flash(_('The %(neighborhood_name)s Neighborhood and %(type_name)s Gig Type has the following Gigs available:', neighborhood_name=neighborhood_name, type_name=type_name))
-    # elif neighborhood_id:
-    #     query = query.filter(Gig.neighborhood_id == neighborhood_id)
-    #     flash(_('The %(neighborhood_name)s Neighborhood has the following Gigs available:', neighborhood_name=neighborhood_name))
-    # elif type_id:
-    #     query = query.filter(Gig.type_id == type_id)
-    #     flash(_('The %(type_name)s Gig Type has the following Gigs available:', type_name=type_name))
-    # elif start_date:
-    #     query = query.filter(Gig.start_date >= start_date)
-    #     flash(_('The following Gigs with a Start Date on or after %(start_date)s are available:', start_date=start_date))
-    # else:
-    #     query = query.filter(1 == 1)
-    #     flash(_('The following Gigs are available:'))
+    flash(_('The following Gigs are available:'))
     gigs = query.all()
     return render_template('search_results.html', gigs=gigs)
