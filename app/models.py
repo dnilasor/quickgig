@@ -206,6 +206,8 @@ class Gig(db.Model):
   start_date = db.Column(db.Date)
   type_id = db.Column(db.Integer, db.ForeignKey('gigtype.id'))
   type_name = db.relationship('Gigtype', lazy='joined', uselist=False)
+  employer_email = db.relationship('User', lazy=True, uselist=False)
+  
 
   def __repr__(self):
     return '<Gig {}>'.format(self.detail)
