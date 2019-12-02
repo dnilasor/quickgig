@@ -5,6 +5,8 @@
            <small>Start Date: {{  gig.start_date }}</small>
            <small>Gig Type: {{  gig.type_name }}</small>
    </div><br>
+
+   <href="{{ url_for('main.detail', id=gig.id) }}"
    <h5 class="mb-1">{{ gig.employer.username }} is hiring:<br></h5>
 
    {{ gig.detail }}<br>
