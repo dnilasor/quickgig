@@ -30,17 +30,7 @@ def index():
           params.append(form.neighborhood_search.data)
           params.append(form.type_search.data)
           params.append(form.date_search.data)
-
-      #     filters.append(neighborhood_id)
-      # else:
-      #     filters.append(None)
-      # if type_name != '':
-      #     type_name = form.type_search.data.name
-      #     type = Gigtype.query.filter_by(name=type_name).first()
-      #     type_id = type.id
-      #     filters.append(type_id)
-
-
+          
       return search_results(params)
   return render_template('search.html', form=form)
   page = request.args.get('page', 1, type=int)
@@ -50,14 +40,8 @@ def index():
     if gigs.has_next else None
   prev_url = url_for('main.index', page=gigs.prev_num) \
     if gigs.has_prev else None
-  # return render_template('index.html', title='Home', form=form, gigs=gigs.items, next_url=next_url, prev_url=prev_url)
   return render_template('index.html', title='Home', gigs=gigs.items, next_url=next_url, prev_url=prev_url)
 
-# language logic for later
-# language = guess_language(form.gig.data)
-# if language == 'UNKNOWN' or len(language) > 5:
-  # language = ''
-# also add to Gig def attr list below
 @bp.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
