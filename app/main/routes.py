@@ -22,22 +22,29 @@ def before_request():
 def index():
   form = SearchForm()
   if form.validate_on_submit():
-      filters = []
-      neighborhood_name = form.neighborhood_search.data.name
-      type_name = form.type_search.data.name
-      start_date = form.date_search.data
-      if neighborhood_name != '':
-          neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
-          neighborhood_id = neighborhood.id
-          filters.append(neighborhood_id)
-      if type_name != '':
-          type = Gigtype.query.filter_by(name=type_name).first()
-          type_id = type.id
-          filters.append(type_id)
-      if start_date:
-          filters.append(start_date)
-      else:
+      if not any([form.neighborhood_search.data, form.type_search.data, form.date_search]):
           return redirect(url_for('main.explore'))
+      else:
+          filters = []
+          filters.append(form.neighborhood_search.data)
+          filters.append(form.type_search.data)
+          filters.append(form.date_search.data)
+      #     neighborhood_name = neighborhood_name
+      #     neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
+      #     neighborhood_id = neighborhood.id
+      #     filters.append(neighborhood_id)
+      # else:
+      #     filters.append(None)
+      # if type_name != '':
+      #     type_name = form.type_search.data.name
+      #     type = Gigtype.query.filter_by(name=type_name).first()
+      #     type_id = type.id
+      #     filters.append(type_id)
+      # if start_date:
+      #     start_date = form.date_search.data
+      #     filters.append(start_date)
+
+      print(filters)
       return search_results(filters)
   return render_template('search.html', form=form)
   page = request.args.get('page', 1, type=int)
