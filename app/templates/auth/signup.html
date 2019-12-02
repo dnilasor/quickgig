@@ -2,36 +2,41 @@
 
 {% block content %}
   <div class="container" align="center">
-  <h1>Sign Up</h1>
+  <h1>Unlock the power of the Gig Economy</h1>
+  <h4>Sign up and get your free QuickGig account.</h4><br>
   <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
-      {{ form.username.label }}<br>
-      {{ form.username(size=32) }}<br>
+    <div class="col-sm-4 col-sm-offset-4">
+      {{ form.username(size=32, class="form-control", placeholder="Username") }}<br>
 	  {% for error in form.username.errors %}
 	  <span style="color: red;">[{{ error }}]</span>
 	  {% endfor %}
+	  </div>
     </p>
     <p>
-	  {{ form.email.label }}<br>
-	  {{ form.email(size=32) }}<br>
+    <div class="col-sm-4 col-sm-offset-4">
+	  {{ form.email(size=32, class="form-control", placeholder="Email") }}<br>
 	  {% for error in form.email.errors %}
 	  <span style="color: red;">[{{ error }}]</span>
 	  {% endfor %}
+	</div>
 	</p>
-	<p>	  
-      {{ form.password.label }}<br>
-      {{ form.password(size=32) }}<br>
+	<p>	 
+	<div class="col-sm-4 col-sm-offset-4">
+      {{ form.password(size=32, class="form-control", placeholder="Password") }}<br>
 	  {% for error in form.password.errors %}
 	  <span style="color: red;">[{{ error }}]</span>
 	  {% endfor %}
+	</div>
     </p>
     <p>	  
-      {{ form.password2.label }}<br>
-      {{ form.password2(size=32) }}<br>
+    <div class="col-sm-4 col-sm-offset-4">
+      {{ form.password2(size=32, class="form-control", placeholder="Re-type Password") }}<br>
 	  {% for error in form.password2.errors %}
 	  <span style="color: red;">[{{ error }}]</span>
 	  {% endfor %}
+	</div>
     </p>
     <p>{{ form.submit(class="btn btn-primary") }}</p>
   </form>
