@@ -2,7 +2,7 @@ from flask import request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from wtforms.validators import ValidationError, DataRequired, Length, InputRequired
+from wtforms.validators import ValidationError, DataRequired, Length, InputRequired, Optional
 from wtforms.fields.html5 import DateField
 from flask_babel import _, lazy_gettext as _l
 from app.models import User, Gig, Neighborhood, Gigtype
@@ -28,11 +28,11 @@ class GigForm(FlaskForm):
   gig = TextAreaField(_l('Describe your gig here'), validators=[DataRequired(), Length(min=1, max=4000)])
   neighborhood = QuerySelectField(query_factory=lambda: Neighborhood.query.all(), get_label="name", allow_blank=False)
   type = QuerySelectField(query_factory=lambda: Gigtype.query.all(), get_label="name", allow_blank=False)
-  date = DateField('Start Date', format='%Y-%m-%d')
+  date = DateField('Start Date', format='%Y-%m-%d', validators=[Optional()])
   submit = SubmitField(_l('Submit'))
 
 class SearchForm(FlaskForm):
   neighborhood_search = QuerySelectField(query_factory=lambda: Neighborhood.query.all(), get_label="name", allow_blank=True)
   type_search = QuerySelectField(query_factory=lambda: Gigtype.query.all(), get_label="name", allow_blank=True)
-  date_search = DateField('Start Date, value is required for all searches', format='%Y-%m-%d')
+  date_search = DateField('Start Date', format='%Y-%m-%d', validators=[Optional()])
   submit = SubmitField(_l('Submit'))
