@@ -32,6 +32,12 @@ class User(UserMixin, db.Model):
   def __repr__(self):
     return '<User {}>'.format(self.username)
 
+  def employer_first_name(self):
+    return self.first_name
+
+  def employer_last_name(self):
+    return self.last_name
+
   def set_password(self, password):
     self.password_hash = generate_password_hash(password)
 
@@ -93,6 +99,8 @@ class Gig(db.Model):
   type_id = db.Column(db.Integer, db.ForeignKey('gigtype.id'))
   type_name = db.relationship('Gigtype', lazy='joined', uselist=False)
   employer_email = db.relationship('User', lazy=True, uselist=False)
+  employer_first_name = db.relationship('User', lazy=True, uselist=False)
+  employer_last_name = db.relationship('User', lazy=True, uselist=False)
 
   def __repr__(self):
     return '<Gig {}>'.format(self.detail)
