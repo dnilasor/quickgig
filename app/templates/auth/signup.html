@@ -7,6 +7,28 @@
   <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
+<<<<<<< HEAD
+=======
+
+      <p>
+      <div class="col-sm-4 col-sm-offset-4">
+        {{ form.first_name(size=32, class="form-control", placeholder="First Name") }}<br>
+  	  {% for error in form.first_name.errors %}
+  	  <span style="color: red;">[{{ error }}]</span>
+  	  {% endfor %}
+  	  </div>
+      </p>
+
+      <p>
+      <div class="col-sm-4 col-sm-offset-4">
+        {{ form.last_name(size=32, class="form-control", placeholder="Last Name") }}<br>
+  	  {% for error in form.last_name.errors %}
+  	  <span style="color: red;">[{{ error }}]</span>
+  	  {% endfor %}
+  	  </div>
+      </p>
+
+>>>>>>> 65bcce6d844fd6fffdd8431c614b0a948884fb40
     <div class="col-sm-4 col-sm-offset-4">
       {{ form.username(size=32, class="form-control", placeholder="Username") }}<br>
 	  {% for error in form.username.errors %}
@@ -17,12 +39,22 @@
     <p>
     <div class="col-sm-4 col-sm-offset-4">
 	  {{ form.email(size=32, class="form-control", placeholder="Email") }}<br>
+<<<<<<< HEAD
 	  {% for error in form.email.errors %}
 	  <span style="color: red;">[{{ error }}]</span>
 	  {% endfor %}
 	</div>
 	</p>
 	<p>	 
+=======
+    {% for error in form.username.errors %}
+	  <span style="color: red;">[{{ error }}]</span>
+	  {% endfor %}
+	  </div>
+    </p>
+
+	<p>
+>>>>>>> 65bcce6d844fd6fffdd8431c614b0a948884fb40
 	<div class="col-sm-4 col-sm-offset-4">
       {{ form.password(size=32, class="form-control", placeholder="Password") }}<br>
 	  {% for error in form.password.errors %}
@@ -30,7 +62,11 @@
 	  {% endfor %}
 	</div>
     </p>
+<<<<<<< HEAD
     <p>	  
+=======
+    <p>
+>>>>>>> 65bcce6d844fd6fffdd8431c614b0a948884fb40
     <div class="col-sm-4 col-sm-offset-4">
       {{ form.password2(size=32, class="form-control", placeholder="Re-type Password") }}<br>
 	  {% for error in form.password2.errors %}

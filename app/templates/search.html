@@ -5,7 +5,7 @@
   <div class="container" align="left">
   <h1>Hello, {{ current_user.username }}!</h1> <br>
 
-  <h4>Find a Gig. Search available Gigs by neighborhood and type.</h4><br>
+  <h4>Find a Gig. Search available Gigs by neighborhood, type, and start date.</h4><br>
         {% if form %}
         <form action="" method="post">
           {{ form.hidden_tag() }}
@@ -19,14 +19,14 @@
             {{ form.type_search(class="form-control") }}
             {% for error in form.type_search.errors %}
             <span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
+			{% endfor %}<br>
 			{{form.date_search.label }}<br>
-            {{ form.date_search(class_='datepicker') }}
+            {{ form.date_search(class_='datepicker', class="btn btn-secondary btn-light btn-sm") }}
 			{{ form.hidden_tag() }}
             {% for error in form.date_search.errors %}
             <span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
-            </div>
+            </div><br>
             <p>{{ form.submit(class="btn btn-primary") }}</p>
         </form>
         {% endif %}

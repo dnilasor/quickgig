@@ -8,6 +8,7 @@ from datetime import datetime
 from guess_language import guess_language
 from app.main import bp
 from flask_babel import _, lazy_gettext as _l
+from sqlalchemy import and_
 
 @bp.before_app_request
 def before_request():
@@ -22,22 +23,15 @@ def before_request():
 def index():
   form = SearchForm()
   if form.validate_on_submit():
-      if form.neighborhood_search.data == None:
-          neighborhood_name = None
-          neighborhood_id = None
+      if not any([form.neighborhood_search.data, form.type_search.data, form.date_search]):
+          return redirect(url_for('main.explore'))
       else:
-          neighborhood_name = form.neighborhood_search.data.name
-          neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
-          neighborhood_id = neighborhood.id
-      if form.type_search.data == None:
-          type_name = None
-          type_id = None
-      else:
-          type_name = form.type_search.data.name
-          type = Gigtype.query.filter_by(name=type_name).first()
-          type_id = type.id
-      start_date = form.date_search.data
-      return search_results(neighborhood_id, neighborhood_name, type_id, type_name, start_date)
+          params = []
+          params.append(form.neighborhood_search.data)
+          params.append(form.type_search.data)
+          params.append(form.date_search.data)
+
+      return search_results(params)
   return render_template('search.html', form=form)
   page = request.args.get('page', 1, type=int)
   gigs = current_user.favorite_gigs().paginate(
@@ -46,14 +40,8 @@ def index():
     if gigs.has_next else None
   prev_url = url_for('main.index', page=gigs.prev_num) \
     if gigs.has_prev else None
-  # return render_template('index.html', title='Home', form=form, gigs=gigs.items, next_url=next_url, prev_url=prev_url)
   return render_template('index.html', title='Home', gigs=gigs.items, next_url=next_url, prev_url=prev_url)
 
-# language logic for later
-# language = guess_language(form.gig.data)
-# if language == 'UNKNOWN' or len(language) > 5:
-  # language = ''
-# also add to Gig def attr list below
 @bp.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
@@ -143,50 +131,32 @@ def explore():
     if gigs.has_prev else None
   return render_template('index.html', title='Explore', gigs=gigs.items, next_url=next_url, prev_url=prev_url)
 
-@bp.route('/search', methods = ['GET', 'POST'])
-@login_required
-def search():
-    form = SearchForm()
-    if form.validate_on_submit():
-        neighborhood_name = form.neighborhood_search.data.name
-        neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
-        neighborhood_id = neighborhood.id
-        return search_results(neighborhood_id, neighborhood_name)
-    return render_template('search.html', form=form)
-
 @bp.route('/<id>_detail/')
+@login_required
 def detail(id):
     gig = Gig.query.get(id)
     return render_template('gig_detail.html', gig=gig)
 
-def search_results(neighborhood_id, neighborhood_name, type_id, type_name, start_date):
+def search_results(params):
     page = request.args.get('page', 1, type=int)
     # paginate = paginate(page, current_app.config['GIGS_PER_PAGE'], False)
     query = Gig.query
-    if neighborhood_id and type_id and start_date:
-        query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.type_id == type_id and Gig.start_date >= start_date)
-        flash(_('The %(neighborhood_name)s Neighborhood and Gig Type %(type_name)s with a Starting Date on or after %(start_date)s has the following Gigs available:', neighborhood_name=neighborhood_name, type_name=type_name, start_date=start_date))
-    elif neighborhood_id and start_date:  
-        query = query.filter(Gig.neighborhood_id == neighborhood_id and Gig.start_date >= start_date)
-        flash(_('The %(neighborhood_name)s Neighborhood with a Starting Date on or after %(start_date)s has the following Gigs available:', neighborhood_name=neighborhood_name, start_date=start_date))
-    elif type_id and start_date:  
-        query = query.filter(Gig.type_id == type_id and Gig.start_date >= start_date)
-        flash(_('The %(type_name)s Gig Type with a Starting Date on or after %(start_date)s has the following Gigs available:', type_name=type_name, start_date=start_date))
-    elif type_id and neighborhood_id:  
-        query = query.filter(Gig.type_id == type_id and Gig.neighborhood_id == neighborhood_id)
-        flash(_('The %(neighborhood_name)s Neighborhood and %(type_name)s Gig Type has the following Gigs available:', neighborhood_name=neighborhood_name, type_name=type_name))
-    elif neighborhood_id:  
-        query = query.filter(Gig.neighborhood_id == neighborhood_id)
-        flash(_('The %(neighborhood_name)s Neighborhood has the following Gigs available:', neighborhood_name=neighborhood_name))
-    elif type_id:  
-        query = query.filter(Gig.type_id == type_id)
-        flash(_('The %(type_name)s Gig Type has the following Gigs available:', type_name=type_name))
-    elif start_date:  
-        query = query.filter(Gig.start_date >= start_date)
-        flash(_('The following Gigs with a Start Date on or after %(start_date)s are available:', start_date=start_date))
-    else:  
-        query = query.filter(1 == 1)
-        flash(_('The following Gigs are available:'))
+    filters = []
+    if params[0] != None:
+        neighborhood_name = params[0].name
+        neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
+        neighborhood_id = neighborhood.id
+        filters.append(Gig.neighborhood_id == neighborhood_id)
+    if params[1] != None:
+        type_name = params[1].name
+        type = Gigtype.query.filter_by(name=type_name).first()
+        type_id = type.id
+        filters.append(Gig.type_id == type_id)
+    if params[2] != None:
+        start_date = params[2]
+        filters.append(Gig.start_date >= start_date)
+
+    query = query.filter(and_(*filters))
+    flash(_('The following Gigs are available:'))
     gigs = query.all()
     return render_template('search_results.html', gigs=gigs)
-
