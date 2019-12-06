@@ -25,7 +25,14 @@
   <hr>
   {% for gig in gigs %}
     {% include '_gig.html' %}
-    <a href="{{ url_for('main.edit_gig', id=gig.id) }}">Edit</a>
+  <div class="container" align="center">
+
+    <div class="list-group">
+  <a href="{{ url_for('main.edit_gig', id=gig.id) }}" class="list-group-item list-group-item-action active">Edit Gig</a>
+     </div>
+        </div>
+        <br>
+
   {% endfor %}
   {% if prev_url %}
   <a href="{{ prev_url }}">Newer gigs</a>
