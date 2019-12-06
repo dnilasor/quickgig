@@ -61,6 +61,36 @@ def create():
     return redirect(url_for('main.create'))
   return render_template('create.html', title='Create Gig', form=form)
 
+@bp.route('/edit/<id>', methods=['GET', 'POST'])
+@login_required
+def edit_gig(id):
+  form = GigForm(current_user.username)
+  fetch_gig = Gig.query.get(id)
+  print(fetch_gig)
+  if form.validate_on_submit():
+     neighborhood_name = form.neighborhood.data.name
+     neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
+     neighborhood_id = neighborhood.id
+     type_name = form.type.data.name
+     type = Gigtype.query.filter_by(name=type_name).first()
+     type_id = type.id
+     start_date = form.date.data
+     gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id, type_id=type_id, start_date=start_date)
+     flash('Your changes have been saved')
+     return redirect(url_for('main.edit_gig'))
+  elif request.method == 'GET':
+    fetch_gig.detail = form.gig.data
+    # fetch_gig.employer = form.employer.data
+    # Employer isn't an editable field, that data gets populated via current_user
+    fetch_gig.start_date = form.date.data
+    fetch_gig.neighborhood_id = id
+    neighborhood = Neighborhood.query.filter_by(id=id).first()
+    neighborhood.name = form.neighborhood.data
+    tid = fetch_gig.tid
+    type = Type.query.filter_by(id=tid).first()
+    type.name = form.type.data
+  return render_template('edit_gig.html', title='Update Gig Information', form=form)
+
 @bp.route('/user/<username>')
 @login_required
 def user(username):
