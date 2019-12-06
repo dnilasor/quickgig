@@ -31,6 +31,9 @@ class GigForm(FlaskForm):
   date = DateField('Start Date', format='%Y-%m-%d', validators=[Optional()])
   submit = SubmitField(_l('Submit'))
 
+# class GigEditForm(GigForm):
+#     id = IntegerField(widget=HiddenInput())
+
 class SearchForm(FlaskForm):
   neighborhood_search = QuerySelectField(query_factory=lambda: Neighborhood.query.all(), get_label="name", allow_blank=True)
   type_search = QuerySelectField(query_factory=lambda: Gigtype.query.all(), get_label="name", allow_blank=True)

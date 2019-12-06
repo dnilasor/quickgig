@@ -64,20 +64,20 @@ def create():
 @bp.route('/edit/<id>', methods=['GET', 'POST'])
 @login_required
 def edit_gig(id):
-  form = GigForm(current_user.username)
+  form = GigForm()
   fetch_gig = Gig.query.get(id)
-  print(fetch_gig)
   if form.validate_on_submit():
+     fetch_gig.detail = form.gig.data
      neighborhood_name = form.neighborhood.data.name
      neighborhood = Neighborhood.query.filter_by(name=neighborhood_name).first()
-     neighborhood_id = neighborhood.id
+     fetch_gig.neighborhood_id = neighborhood.id
      type_name = form.type.data.name
      type = Gigtype.query.filter_by(name=type_name).first()
-     type_id = type.id
+     fetch_gig.type_id = type.id
      start_date = form.date.data
-     gig = Gig(detail=form.gig.data, employer=current_user, neighborhood_id=neighborhood_id, type_id=type_id, start_date=start_date)
+     db.session.commit()
      flash('Your changes have been saved')
-     return redirect(url_for('main.edit_gig'))
+     return redirect(url_for('edit_gig.html'))
   elif request.method == 'GET':
     form.gig.data = fetch_gig.detail
     # fetch_gig.employer = form.employer.data
