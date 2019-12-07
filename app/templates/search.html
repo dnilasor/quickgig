@@ -21,6 +21,7 @@
             <span style="color: red;">[{{ error }}]</span>
 			{% endfor %}<br>
 			{{form.date_search.label }}<br>
+            	<small>Return gigs on or after date:</small><br>
             {{ form.date_search(class_='datepicker', class="btn btn-secondary btn-light btn-sm") }}
 			{{ form.hidden_tag() }}
             {% for error in form.date_search.errors %}
