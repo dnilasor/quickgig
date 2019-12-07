@@ -1,16 +1,4 @@
-2019-11-28 22:46:05,699 ERROR: Exception on /search [GET] [in /Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py:1761]
-Traceback (most recent call last):
-  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 1808, in full_dispatch_request
-    self.try_trigger_before_first_request_functions()
-  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 1855, in try_trigger_before_first_request_functions
-    func()
-  File "/Users/rosalindbenoit/src/quickgig/app/main/routes.py", line 21, in before_first_request
-    user_datastore.find_or_create_role(name='admin', description='Administrator')
-NameError: name 'user_datastore' is not defined
-2019-12-06 18:07:39,759 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
-2019-12-06 18:09:01,135 ERROR: Exception on /edit/15 [POST] [in /Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py:1761]
+2019-12-06 18:38:19,258 ERROR: Exception on /edit/15 [POST] [in /Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -39,7 +27,7 @@ Traceback (most recent call last):
   File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/werkzeug/routing.py", line 1776, in build
     raise BuildError(endpoint, values, method, self)
 werkzeug.routing.BuildError: Could not build url for endpoint 'main.edit_gig.html'. Did you mean 'main.edit_gig' instead?
-2019-12-06 18:09:26,966 ERROR: Exception on /edit/15 [POST] [in /Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py:1761]
+2019-12-06 18:38:44,295 ERROR: Exception on /edit/15 [POST] [in /Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -68,7 +56,8 @@ Traceback (most recent call last):
   File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/werkzeug/routing.py", line 1776, in build
     raise BuildError(endpoint, values, method, self)
 werkzeug.routing.BuildError: Could not build url for endpoint 'main.edit_gig.html'. Did you mean 'main.edit_gig' instead?
-2019-12-06 18:37:51,186 ERROR: Exception on /edit/15 [POST] [in /Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py:1761]
+2019-12-06 19:06:25,792 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 19:07:26,837 ERROR: Exception on /auth/password_reset_request [POST] [in /Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -82,18 +71,49 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask_login/utils.py", line 228, in decorated_view
-    return func(*args, **kwargs)
-  File "/Users/rosalindbenoit/src/quickgig/app/main/routes.py", line 80, in edit_gig
-    return redirect(url_for('main.edit_gig.html'))
-  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/helpers.py", line 356, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 2061, in handle_url_build_error
+  File "/Users/rosalindbenoit/src/quickgig/app/auth/routes.py", line 57, in password_reset_request
+    send_password_reset_email(user)
+  File "/Users/rosalindbenoit/src/quickgig/app/auth/email.py", line 9, in send_password_reset_email
+    sender=app.config['ADMINS'][0],
+NameError: name 'app' is not defined
+2019-12-06 19:12:43,795 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 19:13:04,087 ERROR: Exception on /auth/password_reset_request [POST] [in /Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
     reraise(exc_type, exc_value, tb)
   File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
     raise value
-  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/helpers.py", line 345, in url_for
-    force_external=external)
-  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/werkzeug/routing.py", line 1776, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'main.edit_gig.html'. Did you mean 'main.edit_gig' instead?
+  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/rosalindbenoit/src/quickgig/venv/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/rosalindbenoit/src/quickgig/app/auth/routes.py", line 57, in password_reset_request
+    send_password_reset_email(user)
+  File "/Users/rosalindbenoit/src/quickgig/app/auth/email.py", line 12, in send_password_reset_email
+    html_body=render_template('email/password_reset.html', user=user, token=token))
+  File "/Users/rosalindbenoit/src/quickgig/app/email.py", line 15, in send_email
+    Thread(target=send_async_email, args=(current_._get_current_object(), msg)).start()
+NameError: name 'current_' is not defined
+2019-12-06 19:16:00,854 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 20:19:24,965 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 20:37:05,072 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 20:39:10,840 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 20:41:59,834 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 20:44:09,484 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 20:45:52,355 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 20:50:29,060 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 20:54:58,791 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 20:56:46,732 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 21:00:12,225 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 21:03:21,696 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-06 21:26:03,321 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-07 09:03:55,515 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-07 09:07:02,720 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-07 09:07:47,319 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-07 09:09:23,420 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-07 09:10:02,408 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
+2019-12-07 09:10:27,151 INFO: QuickGig startup [in /Users/rosalindbenoit/src/quickgig/app/__init__.py:80]
