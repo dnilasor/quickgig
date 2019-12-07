@@ -64,8 +64,8 @@ class User(UserMixin, db.Model):
     favorited = Gig.query.join(
       favoriters, (favoriters.c.favorited_id == Gig.user_id)).filter(
         favoriters.c.favoriter_id == self.id)
-    own = Gig.query.filter_by(user_id=self.id)
-    return favorited.union(own).order_by(
+    #own = Gig.query.filter_by(user_id=self.id)
+    return favorited.order_by(
           Gig.timestamp.desc())
 
   def get_password_reset_token(self, expires_in=600):
