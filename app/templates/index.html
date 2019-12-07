@@ -4,11 +4,14 @@
 <div class="container" align="left">
 <h1>Hello, {{ current_user.username }}!</h1> <br>
      {% include 'search.html' %}
-</div>
-<br>
+
+<br><br>
+{% if gigs %}
+<h4>Gigs from You and Favorites</h4><br>
   {% for gig in gigs %}
     {% include '_gig.html' %}
   {% endfor %}
+  {% endif %}
   {% if prev_url %}<br>
 
 <div class="container" align="left">
@@ -24,13 +27,13 @@
         </ul>
     </nav>
 </div>
-   
+
    {% endif %}
    {% if next_url %}<br>
 
 <div class="container" align="left">
     <nav aria-label="Page navigation example">
-        <ul class="pagination"> 
+        <ul class="pagination">
             <li class="page-item"><a class="page-link" href="{{next_url }}">Older Gigs</a></li>
             <li class="page-item">
                 <a class="page-link" href="{{next_url }}" aria-label="Next">
@@ -41,6 +44,8 @@
         </ul>
     </nav>
 </div>
-   
+
+</div>
+
    {% endif %}
 {% endblock %}
