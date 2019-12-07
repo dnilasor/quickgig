@@ -74,14 +74,12 @@ def edit_gig(id):
      type_name = form.type.data.name
      type = Gigtype.query.filter_by(name=type_name).first()
      fetch_gig.type_id = type.id
-     start_date = form.date.data
+     fetch_gig.start_date = form.date.data
      db.session.commit()
      flash('Your changes have been saved')
-     return redirect(url_for('edit_gig.html'))
+     return redirect(url_for('main.edit_gig', id=id))
   elif request.method == 'GET':
     form.gig.data = fetch_gig.detail
-    # fetch_gig.employer = form.employer.data
-    # Employer isn't an editable field, that data gets populated via current_user
     form.date.data = fetch_gig.start_date
     form.neighborhood.data = fetch_gig.neighborhood_name
     form.type.data = fetch_gig.type_name

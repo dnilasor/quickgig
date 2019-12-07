@@ -13,5 +13,10 @@ class Config(object):
   MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
   MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
   MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-  ADMINS = ['rosalindwhitley2017@u.northwestern.edu']
-  GIGS_PER_PAGE = 6
+  # MAIL_SERVER = 'smtp.googlemail.com'
+  # MAIL_PORT = 465
+  # MAIL_USE_TLS = False
+  # MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+  # MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+  ADMINS = ['rosalindwhitley2019@u.northwestern.edu']
+  GIGS_PER_PAGE = 10
