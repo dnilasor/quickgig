@@ -9,11 +9,38 @@
   {% for gig in gigs %}
     {% include '_gig.html' %}
   {% endfor %}
-  {% if prev_url %}
-  <a href="{{ prev_url }}">Newer gigs</a>
-  {% endif %}
-  {% if next_url %}
-  <a href="{{next_url }}">Older gigs</a>
-  {% endif %}
+  {% if prev_url %}<br>
 
+<div class="container" align="left">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="{{ prev_url }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="{{ prev_url }}">Newer Gigs</a></li>
+        </ul>
+    </nav>
+</div>
+   
+   {% endif %}
+   {% if next_url %}<br>
+
+<div class="container" align="left">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination"> 
+            <li class="page-item"><a class="page-link" href="{{next_url }}">Older Gigs</a></li>
+            <li class="page-item">
+                <a class="page-link" href="{{next_url }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+              </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+   
+   {% endif %}
 {% endblock %}
