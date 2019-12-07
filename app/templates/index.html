@@ -1,25 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="container" align="left">
-  <h1>Hello, {{ current_user.username }}!</h1><br>
-     <h4>Explore Gig opportunities</h4>
-
-  {% if form %}
-  <form action="" method="post">
-    {{ form.hidden_tag() }}
-    <p>
-      {{form.gig.label }}<br>
-      {{ form.gig(cols=32, rows=8) }}<br>
-      {% for error in form.gig.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-      </p>
-      <p>{{ form.submit() }}</p>
-  </form>
-  </div>
-  
-  {% endif %}
+<div class="container" align="left">
+<h1>Hello, {{ current_user.username }}!</h1> <br>
+     {% include 'search.html' %}
+</div>
+<br>
   {% for gig in gigs %}
     {% include '_gig.html' %}
   {% endfor %}
@@ -29,5 +15,5 @@
   {% if next_url %}
   <a href="{{next_url }}">Older gigs</a>
   {% endif %}
-</div>
+
 {% endblock %}

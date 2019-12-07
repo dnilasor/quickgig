@@ -32,7 +32,6 @@ def index():
           params.append(form.date_search.data)
 
       return search_results(params)
-  return render_template('search.html', form=form)
   page = request.args.get('page', 1, type=int)
   gigs = current_user.favorite_gigs().paginate(
     page, current_app.config['GIGS_PER_PAGE'], False)
@@ -40,7 +39,7 @@ def index():
     if gigs.has_next else None
   prev_url = url_for('main.index', page=gigs.prev_num) \
     if gigs.has_prev else None
-  return render_template('index.html', title='Home', gigs=gigs.items, next_url=next_url, prev_url=prev_url)
+  return render_template('index.html', title='Home', form=form, gigs=gigs.items, next_url=next_url, prev_url=prev_url)
 
 @bp.route('/create', methods=['GET', 'POST'])
 @login_required
