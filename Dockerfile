@@ -5,10 +5,6 @@ RUN adduser -D quickgig
 WORKDIR /home/quickgig
 
 COPY requirements.txt requirements.txt
-RUN apk update && apk add python3-dev \
-gcc \
-libc-dev \ 
-libffi-dev
 RUN python -m venv venv
 RUN venv/bin/pip install -r requirements.txt
 RUN venv/bin/pip install pymysql[rsa]
