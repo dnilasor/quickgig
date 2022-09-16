@@ -22,7 +22,7 @@ gunicorn==19.9.0
 idna==2.6
 itsdangerous==0.24
 Jinja2==2.10
-Mako==1.0.7
+Mako==1.2.2
 # MarkupSafe==1.0
 PyJWT==1.5.3
 PyMySQL==0.9.3
